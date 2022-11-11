@@ -41,12 +41,12 @@ public class Ventana extends JFrame {
     }
 
     private void iniciarComponentes() {
-        colocarPanelPrincipal();
-        colocarPanelIzquierdo();
-        colocarPanelDerecho();
-        colocarPanelExpendedora();
-        colocarPanelMonedas();
-        colocarPanelComprador();
+        //colocarPanelPrincipal();
+        //colocarPanelIzquierdo();
+        //colocarPanelExpendedora();
+        //colocarPanelDerecho();
+        //colocarPanelMonedas();
+        //colocarPanelComprador();
     }
 
     private void colocarPanelPrincipal() {
@@ -244,7 +244,7 @@ public class Ventana extends JFrame {
     }
 
     public void verMoneda(Moneda moneda) {
-        String aux = "" + moneda.getClass();
+        String aux = "" + moneda.getClass();    
         JLabel monedaVisual = null;
         switch (aux) {
             case "Moneda100":
