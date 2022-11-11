@@ -1,6 +1,7 @@
 package tarea3;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class Ventana extends JFrame {
@@ -10,8 +11,14 @@ public class Ventana extends JFrame {
     public JPanel panelDerecho;
     public JPanel panelExpendedora;
     public JPanel panelMonedas;
+    public JLabel monedaVisible;
+
+    private Comprador comprador;
+    //private Expendedor expendedor;
 
     public Ventana() {
+        comprador = new Comprador();
+        //expendedor = new Expendedor();
         crearVentana();
         iniciarComponentes();
     }
@@ -36,7 +43,7 @@ public class Ventana extends JFrame {
         colocarPanelIzquierdo();
         colocarPanelDerecho();
         colocarPanelExpendedora();
-        colocarpanelMonedas();
+        colocarPanelMonedas();
     }
 
     private void colocarPanelPrincipal() {
@@ -62,6 +69,13 @@ public class Ventana extends JFrame {
         panelDerecho.setBounds(640, 0, 640, 680);
         panelDerecho.setLayout(null);
         panelPrincipal.add(panelDerecho);
+        colocarBebidasCompradas();
+    }
+
+    private void colocarBebidasCompradas() {
+        JLabel bebidasCompradas = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
+        bebidasCompradas.setBounds(425, 125, 70, 400);
+        panelDerecho.add(bebidasCompradas);
     }
 
     private void addWallpaper() {
@@ -83,9 +97,9 @@ public class Ventana extends JFrame {
         //mostrarBebidas();
     }
 
-    private void colocarpanelMonedas() {
+    private void colocarPanelMonedas() {
         panelMonedas = new JPanel();
-        panelMonedas.setBounds(145, 500, 350, 100);
+        panelMonedas.setBounds(0, 500, 350, 100);
         panelMonedas.setLayout(null);
         panelMonedas.setBackground(Color.orange);
         panelDerecho.add(panelMonedas);
@@ -166,32 +180,81 @@ public class Ventana extends JFrame {
     private void colocarMonedas() {
 
         // moneda100
-        JButton moneda100 = new JButton(new ImageIcon("src/recursos/moneda.png")); // tamaño de imagen ya coincide con tamaño del boton
+        JButton moneda100 = new JButton(new ImageIcon("src/recursos/moneda100.png")); // tamaño de imagen ya coincide con tamaño del boton
         moneda100.setBounds(50, 25, 50, 50);
         moneda100.setEnabled(true);
         moneda100.setBackground(Color.red);
         moneda100.setMnemonic('1');
         panelMonedas.add(moneda100);
-        
-         // moneda500
-        JButton moneda500 = new JButton(new ImageIcon("src/recursos/moneda.png")); // tamaño de imagen ya coincide con tamaño del boton
+
+        // moneda500
+        JButton moneda500 = new JButton(new ImageIcon("src/recursos/moneda500.png")); // tamaño de imagen ya coincide con tamaño del boton
         moneda500.setBounds(150, 25, 50, 50);
         moneda500.setEnabled(true);
         moneda500.setBackground(Color.red);
-        moneda500.setMnemonic('1');
+        moneda500.setMnemonic('2');
         panelMonedas.add(moneda500);
-        
-         // moneda1000
-        JButton moneda1000 = new JButton(new ImageIcon("src/recursos/moneda.png")); // tamaño de imagen ya coincide con tamaño del boton
+
+        // moneda1000
+        JButton moneda1000 = new JButton(new ImageIcon("src/recursos/moneda1000.png")); // tamaño de imagen ya coincide con tamaño del boton
         moneda1000.setBounds(250, 25, 50, 50);
         moneda1000.setEnabled(true);
         moneda1000.setBackground(Color.red);
         moneda1000.setMnemonic('1');
         panelMonedas.add(moneda1000);
+
+        ActionListener pulsarMoneda100 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                comprador.setMoneda(new Moneda100());
+                verMoneda(comprador.getMoneda());
+            }
+        };
+
+        ActionListener pulsarMoneda500 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                comprador.setMoneda(new Moneda500());
+                verMoneda(comprador.getMoneda());
+            }
+        };
+
+        ActionListener pulsarMoneda1000 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                comprador.setMoneda(new Moneda1000());
+                verMoneda(comprador.getMoneda());
+            }
+        };
+
+        moneda100.addActionListener(pulsarMoneda100);
+        moneda500.addActionListener(pulsarMoneda500);
+        moneda1000.addActionListener(pulsarMoneda1000);
     }
-    
+
+    public void verMoneda(Moneda moneda) {
+        String aux = "" + moneda.getClass();
+        JLabel monedaVisual = null;
+        switch (aux) {
+            case "Moneda100":
+                monedaVisual = new JLabel(new ImageIcon("src/recursos/moneda100.png"));
+                break;
+            case "Moneda500":
+                monedaVisual = new JLabel(new ImageIcon("src/recursos/moneda500.png"));
+                break;
+            case "Moneda1000":
+                monedaVisual = new JLabel(new ImageIcon("src/recursos/moneda1000.png"));
+                break;
+        }
+
+        if (monedaVisual != null) {
+            monedaVisual.setBounds(100, 100, 50, 50);
+            panelDerecho.add(monedaVisual);
+        }
+
+    }
     /*
     mostrarBebidas(){
-        
-    }*/
+    }
+    */
 }
