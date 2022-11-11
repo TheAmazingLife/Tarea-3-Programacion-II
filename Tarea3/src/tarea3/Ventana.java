@@ -26,7 +26,7 @@ public class Ventana extends JFrame {
 
         this.setLocationRelativeTo(null); // Posicion de la ventana al cento de la pantalla
 
-        ImageIcon iconoVentana = new ImageIcon(this.getClass().getResource("/recursos/iconoVentana.png")); // Creaciom de ImageIcon con el icono de la ventana
+        ImageIcon iconoVentana = new ImageIcon(this.getClass().getResource("/recursos/iconoVentana2.png")); // Creaciom de ImageIcon con el icono de la ventana
         this.setIconImage(iconoVentana.getImage()); // set iconoVentana como el icono de Ventana
         // medoto alternativo this.setIconImage(new ImageIcon(this.getClass().getResource("/recursos/iconoVentana.png")).getImage());
     }
