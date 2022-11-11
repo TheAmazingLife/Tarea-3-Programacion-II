@@ -9,6 +9,7 @@ public class Ventana extends JFrame {
     public JPanel panelIzquierdo;
     public JPanel panelDerecho;
     public JPanel panelExpendedora;
+    public JPanel panelMonedas;
 
     public Ventana() {
         crearVentana();
@@ -35,6 +36,7 @@ public class Ventana extends JFrame {
         colocarPanelIzquierdo();
         colocarPanelDerecho();
         colocarPanelExpendedora();
+        colocarpanelMonedas();
     }
 
     private void colocarPanelPrincipal() {
@@ -79,6 +81,15 @@ public class Ventana extends JFrame {
         colocarBotones();
         colocarEtiquetas();
         //mostrarBebidas();
+    }
+
+    private void colocarpanelMonedas() {
+        panelMonedas = new JPanel();
+        panelMonedas.setBounds(145, 500, 350, 100);
+        panelMonedas.setLayout(null);
+        panelMonedas.setBackground(Color.orange);
+        panelDerecho.add(panelMonedas);
+        colocarMonedas();
     }
 
     private void colocarEtiquetas() {
@@ -151,6 +162,34 @@ public class Ventana extends JFrame {
         botonVuelto.setMnemonic('v');
         panelExpendedora.add(botonVuelto);
     }
+
+    private void colocarMonedas() {
+
+        // moneda100
+        JButton moneda100 = new JButton(new ImageIcon("src/recursos/moneda.png")); // tamaño de imagen ya coincide con tamaño del boton
+        moneda100.setBounds(50, 25, 50, 50);
+        moneda100.setEnabled(true);
+        moneda100.setBackground(Color.red);
+        moneda100.setMnemonic('1');
+        panelMonedas.add(moneda100);
+        
+         // moneda500
+        JButton moneda500 = new JButton(new ImageIcon("src/recursos/moneda.png")); // tamaño de imagen ya coincide con tamaño del boton
+        moneda500.setBounds(150, 25, 50, 50);
+        moneda500.setEnabled(true);
+        moneda500.setBackground(Color.red);
+        moneda500.setMnemonic('1');
+        panelMonedas.add(moneda500);
+        
+         // moneda1000
+        JButton moneda1000 = new JButton(new ImageIcon("src/recursos/moneda.png")); // tamaño de imagen ya coincide con tamaño del boton
+        moneda1000.setBounds(250, 25, 50, 50);
+        moneda1000.setEnabled(true);
+        moneda1000.setBackground(Color.red);
+        moneda1000.setMnemonic('1');
+        panelMonedas.add(moneda1000);
+    }
+    
     /*
     mostrarBebidas(){
         
