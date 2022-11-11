@@ -10,7 +10,9 @@ public class Ventana extends JFrame {
     public JPanel panelIzquierdo;
     public JPanel panelDerecho;
     public JPanel panelExpendedora;
+    public JPanel panelComprador;
     public JPanel panelMonedas;
+
     public JLabel monedaVisible;
 
     private Comprador comprador;
@@ -44,6 +46,7 @@ public class Ventana extends JFrame {
         colocarPanelDerecho();
         colocarPanelExpendedora();
         colocarPanelMonedas();
+        colocarPanelComprador();
     }
 
     private void colocarPanelPrincipal() {
@@ -104,6 +107,14 @@ public class Ventana extends JFrame {
         panelMonedas.setBackground(Color.orange);
         panelDerecho.add(panelMonedas);
         colocarMonedas();
+    }
+
+    private void colocarPanelComprador() {
+        panelComprador = new JPanel();
+        panelComprador.setBounds(0, 125, 350, 350);
+        panelComprador.setLayout(null);
+        panelComprador.setBackground(Color.black);
+        panelDerecho.add(panelComprador);
     }
 
     private void colocarEtiquetas() {
@@ -248,13 +259,13 @@ public class Ventana extends JFrame {
         }
 
         if (monedaVisual != null) {
-            monedaVisual.setBounds(100, 100, 50, 50);
-            panelDerecho.add(monedaVisual);
+            monedaVisual.setBounds(0, 0, 50, 50);
+            panelComprador.add(monedaVisual);
         }
 
     }
     /*
     mostrarBebidas(){
     }
-    */
+     */
 }
