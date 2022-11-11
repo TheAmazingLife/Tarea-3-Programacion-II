@@ -5,7 +5,10 @@ import javax.swing.*;
 
 public class Ventana extends JFrame {
 
-    public JPanel panel;
+    public JPanel panelPrincipal;
+    public JPanel panelIzquierdo;
+    public JPanel panelDerecho;
+    public JPanel panelExpendedora;
 
     public Ventana() {
         crearVentana();
@@ -28,90 +31,128 @@ public class Ventana extends JFrame {
     }
 
     private void iniciarComponentes() {
-        colocarPanel();
-        colocarBotones();
-        colocarEtiquetas();
+        colocarPanelPrincipal();
+        colocarPanelIzquierdo();
+        colocarPanelDerecho();
+        colocarPanelExpendedora();
     }
 
-    private void colocarPanel() {
+    private void colocarPanelPrincipal() {
 
         // se coloca el fondo
-        panel = new JPanel();
-        panel.setBackground(Color.lightGray);
-        panel.setLayout(null);
-        this.getContentPane().add(panel);
+        panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(null);
+        this.getContentPane().add(panelPrincipal);
+        //addWallpaper();
+    }
+
+    private void colocarPanelIzquierdo() {
+
+        panelIzquierdo = new JPanel();
+        panelIzquierdo.setBounds(0, 0, 640, 680);
+        panelIzquierdo.setLayout(null);
+        panelPrincipal.add(panelIzquierdo);
+    }
+
+    private void colocarPanelDerecho() {
+
+        panelDerecho = new JPanel();
+        panelDerecho.setBounds(640, 0, 640, 680);
+        panelDerecho.setLayout(null);
+        panelPrincipal.add(panelDerecho);
+    }
+
+    private void addWallpaper() {
+
+        JLabel wallpaper = new JLabel(new ImageIcon("src/recursos/wallpaperExpendedora.jpg"));
+        wallpaper.setBounds(0, 0, 1280, 720);
+        panelPrincipal.add(wallpaper);
+    }
+
+    private void colocarPanelExpendedora() {
+        // se coloca la maquina
+        panelExpendedora = new JPanel();
+        panelExpendedora.setBounds(145, 90, 350, 500);
+        panelExpendedora.setLayout(null);
+        panelExpendedora.setBackground(Color.orange);
+        panelIzquierdo.add(panelExpendedora);
+        colocarBotones();
+        colocarEtiquetas();
+        //mostrarBebidas();
     }
 
     private void colocarEtiquetas() {
 
         // ventana 1
-        JLabel ventana1 = new JLabel();
-        ventana1.setBounds(60 + 130 * 0, 50, 120, 400);
-        ventana1.setOpaque(true);
-        ventana1.setBackground(Color.cyan);
-        ventana1.setLayout(null);
-        panel.add(ventana1);
+        JLabel ventana1 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana1.setBounds(30, 15, 70, 400);
+        panelExpendedora.add(ventana1);
 
         // ventana 2
-        JLabel ventana2 = new JLabel();
-        ventana2.setBounds(60 + 130 * 1, 50, 120, 400);
-        ventana2.setOpaque(true);
-        ventana2.setBackground(Color.cyan);
-        ventana2.setLayout(null);
-        panel.add(ventana2);
+        JLabel ventana2 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana2.setBounds(110, 15, 70, 400);
+        panelExpendedora.add(ventana2);
 
         // ventana 3
-        JLabel ventana3 = new JLabel();
-        ventana3.setBounds(60 + 130 * 2, 50, 120, 400);
-        ventana3.setOpaque(true);
-        ventana3.setBackground(Color.cyan);
-        ventana3.setLayout(null);
-        panel.add(ventana3);
-
-        // se coloca la maquina
-        JLabel maquina = new JLabel();
-        maquina.setBounds(250, 10, 350, 500);
-        maquina.setOpaque(true);
-        maquina.setBackground(Color.orange);
-        maquina.setLayout(null);
-        panel.add(maquina);
-
+        JLabel ventana3 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana3.setBounds(190, 15, 70, 400);
+        panelExpendedora.add(ventana3);
     }
 
     private void colocarBotones() {
 
         // Boton PULL
         JButton botonPull = new JButton("PULL");
-        botonPull.setBounds(60, 450 + 50, 380, 100);
+        botonPull.setBounds(30, 430, 230, 50);
         botonPull.setForeground(Color.white);
         botonPull.setBackground(Color.black);
         botonPull.setFont(new Font("arial", 1, 20));
         botonPull.setEnabled(true); // si es false, el boton esta "apagado"
         botonPull.setMnemonic('p'); // la tecla funciona con alt + letra
-        panel.add(botonPull);
+        panelExpendedora.add(botonPull);
 
         // boton cocacola
-        JButton botonCocacola = new JButton(new ImageIcon("botonCocacola.png")); // tamaño de imagen ya coincide con tamaño del boton
-        botonCocacola.setBounds(490, 100, 80, 40);
+        JButton botonCocacola = new JButton(new ImageIcon("src/recursos/botonCocacola.jpg")); // tamaño de imagen ya coincide con tamaño del boton
+        botonCocacola.setBounds(270, 180, 60, 30);
         botonCocacola.setEnabled(true);
         botonCocacola.setBackground(Color.red);
         botonCocacola.setMnemonic('c');
-        panel.add(botonCocacola);
+        panelExpendedora.add(botonCocacola);
 
         // boton fanta
-        JButton botonFanta = new JButton(new ImageIcon("botonCocacola.png")); // tamaño de imagen ya coincide con tamaño del boton
-        botonFanta.setBounds(490, 170, 80, 40);
+        JButton botonFanta = new JButton(new ImageIcon("src/recursos/botonFanta.jpg")); // tamaño de imagen ya coincide con tamaño del boton
+        botonFanta.setBounds(270, 220, 60, 30);
         botonFanta.setEnabled(true);
         botonFanta.setBackground(Color.red);
-        botonFanta.setMnemonic('c');
-        panel.add(botonFanta);
+        botonFanta.setMnemonic('f');
+        panelExpendedora.add(botonFanta);
 
         // boton sprite
-        JButton botonSprite = new JButton(new ImageIcon("botonCocacola.png")); // tamaño de imagen ya coincide con tamaño del boton
-        botonSprite.setBounds(490, 240, 80, 40);
+        JButton botonSprite = new JButton(new ImageIcon("src/recursos/botonSprite.jpg")); // tamaño de imagen ya coincide con tamaño del boton
+        botonSprite.setBounds(270, 260, 60, 30);
         botonSprite.setEnabled(true);
         botonSprite.setBackground(Color.red);
-        botonSprite.setMnemonic('c');
-        panel.add(botonSprite);
+        botonSprite.setMnemonic('s');
+        panelExpendedora.add(botonSprite);
+
+        // boton ranura de monedas
+        JButton botonRanura = new JButton(new ImageIcon("src/recursos.jpg")); // tamaño de imagen ya coincide con tamaño del boton
+        botonRanura.setBounds(270, 300, 30, 30);
+        botonRanura.setEnabled(true);
+        botonRanura.setBackground(Color.black);
+        botonRanura.setMnemonic('r');
+        panelExpendedora.add(botonRanura);
+
+        // boton vuelto
+        JButton botonVuelto = new JButton(new ImageIcon("src/recursos.jpg")); // tamaño de imagen ya coincide con tamaño del boton
+        botonVuelto.setBounds(270, 340, 30, 30);
+        botonVuelto.setEnabled(true);
+        botonVuelto.setBackground(Color.black);
+        botonVuelto.setMnemonic('v');
+        panelExpendedora.add(botonVuelto);
     }
+    /*
+    mostrarBebidas(){
+        
+    }*/
 }
