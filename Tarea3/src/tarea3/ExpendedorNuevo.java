@@ -10,7 +10,6 @@ import javax.swing.*;
 public class ExpendedorNuevo {
 
     // FrontEnd
-    private JLabel expendedoraVisible;
     private JPanel panelPrincipal;
     private int posX, posY;
 
@@ -25,18 +24,29 @@ public class ExpendedorNuevo {
         posY = y;
     }
 
-    private void visualizarExpendedora() { // Agrega el panel expendedora a expendedor (lado izqauierdo)
-        expendedoraVisible = new JLabel();
-        expendedoraVisible.setBounds(posX, posY, 350, 500);
-        expendedoraVisible.setLayout(null);
-        expendedoraVisible.setBackground(Color.ORANGE);
-        panelPrincipal.add(expendedoraVisible);
+    private void visualizarExpendedora() { // Agrega el panel expendedora
         colocarBotones();
         colocarEtiquetas();
         // mostrarBebidas(); no habilitado
     }
 
+
     private void colocarBotones() {
+
+        // ventana 1
+        JButton ventana1 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana1.setBounds(posX + 30, posY + 15, 70, 400);
+        panelPrincipal.add(ventana1);
+
+        // ventana 2
+        JButton ventana2 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana2.setBounds(posX + 110, posY + 15, 70, 400);
+        panelPrincipal.add(ventana2);
+
+        // ventana 3
+        JButton ventana3 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana3.setBounds(posX + 190, posY + 15, 70, 400);
+        panelPrincipal.add(ventana3);
 
         // Boton PULL
         JButton botonPull = new JButton("PULL");
@@ -118,7 +128,7 @@ public class ExpendedorNuevo {
                 intentarCompra(monedaIngresada, 3);
             }
         };
-
+        /*
         ActionListener pulsarRanuraMonedas = new ActionListener() {
 
             @Override
@@ -134,32 +144,22 @@ public class ExpendedorNuevo {
             public void actionPerformed(ActionEvent ae) {
                 panelPrincipal.monedaExpendedora();
             }
-        };
+        };*/
 
         botonCocacola.addActionListener(pulsarCocacola);
         botonFanta.addActionListener(pulsarFanta);
         botonSprite.addActionListener(pulsarSprite);
-        botonRanura.addActionListener(pulsarRanuraMonedas);
-        botonVuelto.addActionListener(pulsarBotonVuelto);
-
+        //botonRanura.addActionListener(pulsarRanuraMonedas);
+        // botonVuelto.addActionListener(pulsarBotonVuelto);
     }
 
     private void colocarEtiquetas() {
+        JLabel expendedoraVisible = new JLabel(new ImageIcon("src/recursos/expendedor.jpg"));
+        expendedoraVisible.setBounds(posX, posY, 350, 500);
+        expendedoraVisible.setLayout(null);
+        expendedoraVisible.setBackground(Color.orange);
+        panelPrincipal.add(expendedoraVisible);
 
-        // ventana 1
-        JLabel ventana1 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
-        ventana1.setBounds(posX + 30, posY + 15, 70, 400);
-        panelPrincipal.add(ventana1);
-
-        // ventana 2
-        JLabel ventana2 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
-        ventana2.setBounds(posX + 110, posY + 15, 70, 400);
-        panelPrincipal.add(ventana2);
-
-        // ventana 3
-        JLabel ventana3 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
-        ventana3.setBounds(posX + 190, posY + 15, 70, 400);
-        panelPrincipal.add(ventana3);
     }
 
     // BackEnd

@@ -19,7 +19,7 @@ public class Ventana2 extends JFrame {
         this.setTitle("Maquina Expenderora"); // Titulo de la ventana
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); // Tipo de cerrado
 
-        this.setResizable(false); // Eviar que sea reajustada
+        this.setResizable(false); // Evitar que sea reajustada
         this.setSize(1280, 720); // Resolucion de la ventana 1280 x 720
         this.setVisible(true); // set Visibilidad de la ventana como visible
 

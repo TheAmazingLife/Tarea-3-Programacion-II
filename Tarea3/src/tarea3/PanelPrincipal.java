@@ -1,9 +1,6 @@
 package tarea3;
 
-import java.awt.Color;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class PanelPrincipal extends JPanel {
 
@@ -13,21 +10,22 @@ public class PanelPrincipal extends JPanel {
     public PanelPrincipal(JFrame ventana) {
         this.setLayout(null);
         exp = new ExpendedorNuevo();
-        com = new Comprador(this);
-        this.setBackground(Color.white);
-        ventana.getContentPane().add(this);
-        inicializarTodo();
-    }
-
-    public void inicializarTodo() {
         exp.graficaExpendedor(this);
+        com = new Comprador(this);
+        
+         JLabel wallpaper = new JLabel(new ImageIcon("src/recursos/wallpaperExpendedora.jpg"));
+        wallpaper.setLayout(null);
+        wallpaper.setBounds(0, 0, 1280, 720);
+        add(wallpaper);
+        
+        ventana.getContentPane().add(this);
     }
 
     public void monedaComprador() {
         System.out.println("BANANA");
         exp.addMoneda(com.getMoneda());
     }
-    
+
     public void monedaExpendedora() {
         System.out.println("Amongu");
         com.addMoneda(exp.retornarMoneda());
