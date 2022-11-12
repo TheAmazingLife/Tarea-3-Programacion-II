@@ -8,17 +8,28 @@ import javax.swing.JPanel;
 public class PanelPrincipal extends JPanel {
 
     private Comprador com;
-    private Expendedor exp;
+    private ExpendedorNuevo exp;
 
     public PanelPrincipal(JFrame ventana) {
         this.setLayout(null);
-        exp = new Expendedor(this);
+        exp = new ExpendedorNuevo();
         com = new Comprador(this);
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.white);
         ventana.getContentPane().add(this);
+        inicializarTodo();
     }
 
-    public Comprador getComprador(PanelPrincipal this) {
-        return com;
+    public void inicializarTodo() {
+        exp.graficaExpendedor(this);
+    }
+
+    public void monedaComprador() {
+        System.out.println("BANANA");
+        exp.addMoneda(com.getMoneda());
+    }
+    
+    public void monedaExpendedora() {
+        System.out.println("Amongu");
+        com.addMoneda(exp.retornarMoneda());
     }
 }
