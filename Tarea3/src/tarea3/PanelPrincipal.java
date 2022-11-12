@@ -21,7 +21,7 @@ public class PanelPrincipal extends JPanel {
         ventana.getContentPane().add(this);
     }
 
-    public void monedaComprador() {
+    /* public void monedaComprador() {
         System.out.println("BANANA");
         exp.addMoneda(com.getMoneda());
     }
@@ -29,5 +29,5 @@ public class PanelPrincipal extends JPanel {
     public void monedaExpendedora() {
         System.out.println("Amongu");
         com.addMoneda(exp.retornarMoneda());
-    }
+    } */
 }

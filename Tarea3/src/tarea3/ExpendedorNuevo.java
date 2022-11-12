@@ -128,29 +128,39 @@ public class ExpendedorNuevo {
                 intentarCompra(monedaIngresada, 3);
             }
         };
-        /*
-        ActionListener pulsarRanuraMonedas = new ActionListener() {
+
+        ActionListener pulsarPull = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                intentarSacarBebida();
+            }
+        };
+
+        /* ActionListener pulsarRanuraMonedas = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelPrincipal.monedaComprador();
             }
-        };
+        }; */
+        
 
         // Boton Vuelto
-        ActionListener pulsarBotonVuelto = new ActionListener() {
-
+        ActionListener pulsarBotonRetorno = new ActionListener() {
+            
             @Override
             public void actionPerformed(ActionEvent ae) {
-                panelPrincipal.monedaExpendedora();
+                //panelPrincipal.monedaExpendedora();
+                intentarRetornarMoneda();
             }
-        };*/
-
+        };
         botonCocacola.addActionListener(pulsarCocacola);
         botonFanta.addActionListener(pulsarFanta);
         botonSprite.addActionListener(pulsarSprite);
+        botonPull.addActionListener(pulsarPull);
         //botonRanura.addActionListener(pulsarRanuraMonedas);
-        // botonVuelto.addActionListener(pulsarBotonVuelto);
+        botonVuelto.addActionListener(pulsarBotonRetorno);
     }
 
     private void colocarEtiquetas() {
@@ -281,10 +291,14 @@ public class ExpendedorNuevo {
         }
     }
 
-    public Moneda retornarMoneda() { // Metodo Retorno de moneda en depositoRetorno
-        Moneda aux = depositoRetorno;
-        depositoRetorno = null;
-        return aux;
+    public Moneda retornarMoneda() throws NoHayMonedaRetorno{ // Metodo Retorno de moneda en depositoRetorno
+        if (depositoRetorno != null) {
+            Moneda aux = depositoRetorno;
+            depositoRetorno = null;
+            return aux;
+        } else {
+            throw new NoHayMonedaRetorno();
+        }
     }
 
     public Moneda getVuelto() { // devuelve UNA moneda del deposito en caso de que este vacio retorna null
@@ -299,9 +313,35 @@ public class ExpendedorNuevo {
         depositoEspecial = bebida;
     }
 
-    public Bebida getBebida() { // Llamado por el boton PULL saca la bebida del deposito
-        Bebida aux = depositoEspecial;
-        depositoEspecial = null;
-        return aux;
+    public Bebida getBebida() throws NoHayBebidaDeposito{ // Llamado por el boton PULL saca la bebida del deposito
+        if (depositoEspecial != null) {
+            Bebida aux = depositoEspecial;
+            depositoEspecial = null;
+            return aux;
+        } else {
+            throw new NoHayBebidaDeposito();
+        }
+    }
+
+    public Bebida intentarSacarBebida() {
+        try {
+            Bebida aux = getBebida();
+            return aux;
+        } catch (NoHayBebidaDeposito e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+    public Moneda intentarRetornarMoneda() {
+        try {
+            Moneda aux = retornarMoneda(); //metodo retornar moneda deposito
+            return aux;
+        } catch (NoHayMonedaRetorno e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
