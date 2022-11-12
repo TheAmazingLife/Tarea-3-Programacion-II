@@ -10,10 +10,10 @@ public class PanelPrincipal extends JPanel {
     private Expendedor exp;
 
     public PanelPrincipal(JFrame ventana) {
-        exp = new Expendedor(this);
-        com = new Comprador(this);
         this.setBackground(Color.WHITE);
         this.setLayout(null);
+        exp = new Expendedor(this);
+        com = new Comprador(this); 
         ventana.getContentPane().add(this);
     }
 }
