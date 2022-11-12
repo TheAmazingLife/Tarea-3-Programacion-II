@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Expendedor extends JPanel {
-    public JPanel panelExpendedora;
+    private JPanel panelExpendedora;
 
     // todos los panelIzquierdo se sustituyen por this ya que Expendedor es un panel izquierdo
     public Expendedor(JPanel panelPrincipal) {

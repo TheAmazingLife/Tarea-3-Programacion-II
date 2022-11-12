@@ -14,10 +14,13 @@ import javax.swing.JPanel;
 public class Comprador extends JPanel {
     private JPanel panelMonedas;
     private JPanel panelComprador;
+
+    private Moneda moneda;
     // todos los panelDerecho se sustituyen por this ya que Comprador es un panel derecho
     public Comprador(JPanel panelPrincipal) {
         this.setBounds(640, 0, 640, 680);
         this.setLayout(null);
+        moneda = null;
         panelPrincipal.add(this);
         colocarBebidasCompradas();
         colocarPanelMonedas();
