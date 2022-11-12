@@ -1,7 +1,6 @@
 package tarea3;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class Ventana extends JFrame {
@@ -13,13 +12,13 @@ public class Ventana extends JFrame {
     public JPanel panelComprador;
     public JPanel panelMonedas;
 
-    public JLabel monedaVisible;
+    public JPanel monedaVisible;
 
     private Comprador comprador;
     //private Expendedor expendedor;
 
     public Ventana() {
-        comprador = new Comprador();
+        comprador = new Comprador(panelPrincipal);
         //expendedor = new Expendedor();
         crearVentana();
         iniciarComponentes();
@@ -213,7 +212,7 @@ public class Ventana extends JFrame {
         moneda1000.setBackground(Color.red);
         moneda1000.setMnemonic('1');
         panelMonedas.add(moneda1000);
-
+        /*
         ActionListener pulsarMoneda100 = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -240,11 +239,11 @@ public class Ventana extends JFrame {
 
         moneda100.addActionListener(pulsarMoneda100);
         moneda500.addActionListener(pulsarMoneda500);
-        moneda1000.addActionListener(pulsarMoneda1000);
+        moneda1000.addActionListener(pulsarMoneda1000);*/
     }
 
     public void verMoneda(Moneda moneda) {
-        String aux = "" + moneda.getClass();    
+        String aux = "" + moneda.getClass();
         JLabel monedaVisual = null;
         switch (aux) {
             case "Moneda100":

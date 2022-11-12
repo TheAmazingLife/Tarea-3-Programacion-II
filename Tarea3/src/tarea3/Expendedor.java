@@ -5,20 +5,19 @@ package tarea3;
  * colocarPanelIzquierdo() netodo sustituido por constructor de clase Expendedor
  * 
  */
-
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class Expendedor extends JPanel {
-    public JPanel panelExpendedora;
+
+    private JPanel panelExpendedora;
+    private int saldo;
 
     // todos los panelIzquierdo se sustituyen por this ya que Expendedor es un panel izquierdo
     public Expendedor(JPanel panelPrincipal) {
+        saldo = 0;
         this.setBounds(0, 0, 640, 680);
         this.setLayout(null);
         panelPrincipal.add(this);
@@ -87,6 +86,14 @@ public class Expendedor extends JPanel {
         botonVuelto.setBackground(Color.black);
         botonVuelto.setMnemonic('v');
         panelExpendedora.add(botonVuelto);
+
+        ActionListener pulsarRanuraMonedas = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+            }
+        };
+
+        botonRanura.addActionListener(pulsarRanuraMonedas);
     }
 
     private void colocarEtiquetas() {
