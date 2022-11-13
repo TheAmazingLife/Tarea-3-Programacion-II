@@ -26,7 +26,7 @@ public class Comprador {
         posYBilletera = 0;
         billeteraSetXY(posX, posY);
         this.panelPrincipal = panelPrincipal;
-        visualizarComprador();
+        //visualizarComprador();
         //colocarBebidasCompradas();
         colocarBilletera();
     }
@@ -125,6 +125,7 @@ public class Comprador {
         switch (aux) {
             case "class tarea3.Moneda100":
                 monedaVisualNueva = new JLabel(new ImageIcon("src/recursos/moneda100.png"));
+                panelPrincipal.add(monedaVisualNueva);
                 break;
             case "class tarea3.Moneda500":
                 monedaVisualNueva = new JLabel(new ImageIcon("src/recursos/moneda500.png"));
@@ -138,6 +139,7 @@ public class Comprador {
         if (monedaVisual != null) {
             panelPrincipal.remove(monedaVisual);
         }
+        //panelPrincipal.removeAll();
         monedaVisualNueva.setBounds(posX + 200, posY + 260, 50, 50);
         panelPrincipal.add(monedaVisualNueva);
         monedaVisual = monedaVisualNueva;
