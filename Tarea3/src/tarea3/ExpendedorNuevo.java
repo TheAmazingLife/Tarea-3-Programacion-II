@@ -10,7 +10,6 @@ import javax.swing.*;
 public class ExpendedorNuevo {
 
     // FrontEnd
-    private JLabel expendedoraVisible;
     private JPanel panelPrincipal;
     private int posX, posY;
 
@@ -25,18 +24,29 @@ public class ExpendedorNuevo {
         posY = y;
     }
 
-    private void visualizarExpendedora() { // Agrega el panel expendedora a expendedor (lado izqauierdo)
-        expendedoraVisible = new JLabel();
-        expendedoraVisible.setBounds(posX, posY, 350, 500);
-        expendedoraVisible.setLayout(null);
-        expendedoraVisible.setBackground(Color.ORANGE);
-        panelPrincipal.add(expendedoraVisible);
+    private void visualizarExpendedora() { // Agrega el panel expendedora
         colocarBotones();
         colocarEtiquetas();
         // mostrarBebidas(); no habilitado
     }
 
+
     private void colocarBotones() {
+
+        // ventana 1
+        JButton ventana1 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana1.setBounds(posX + 30, posY + 15, 70, 400);
+        panelPrincipal.add(ventana1);
+
+        // ventana 2
+        JButton ventana2 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana2.setBounds(posX + 110, posY + 15, 70, 400);
+        panelPrincipal.add(ventana2);
+
+        // ventana 3
+        JButton ventana3 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        ventana3.setBounds(posX + 190, posY + 15, 70, 400);
+        panelPrincipal.add(ventana3);
 
         // Boton PULL
         JButton botonPull = new JButton("PULL");
@@ -119,47 +129,47 @@ public class ExpendedorNuevo {
             }
         };
 
-        ActionListener pulsarRanuraMonedas = new ActionListener() {
+        ActionListener pulsarPull = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                intentarSacarBebida();
+            }
+        };
+
+        /* ActionListener pulsarRanuraMonedas = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
                 panelPrincipal.monedaComprador();
             }
-        };
+        }; */
+        
 
         // Boton Vuelto
-        ActionListener pulsarBotonVuelto = new ActionListener() {
-
+        ActionListener pulsarBotonRetorno = new ActionListener() {
+            
             @Override
             public void actionPerformed(ActionEvent ae) {
-                panelPrincipal.monedaExpendedora();
+                //panelPrincipal.monedaExpendedora();
+                intentarRetornarMoneda();
             }
         };
-
         botonCocacola.addActionListener(pulsarCocacola);
         botonFanta.addActionListener(pulsarFanta);
         botonSprite.addActionListener(pulsarSprite);
-        botonRanura.addActionListener(pulsarRanuraMonedas);
-        botonVuelto.addActionListener(pulsarBotonVuelto);
-
+        botonPull.addActionListener(pulsarPull);
+        //botonRanura.addActionListener(pulsarRanuraMonedas);
+        botonVuelto.addActionListener(pulsarBotonRetorno);
     }
 
     private void colocarEtiquetas() {
+        JLabel expendedoraVisible = new JLabel(new ImageIcon("src/recursos/expendedor.jpg"));
+        expendedoraVisible.setBounds(posX, posY, 350, 500);
+        expendedoraVisible.setLayout(null);
+        expendedoraVisible.setBackground(Color.orange);
+        panelPrincipal.add(expendedoraVisible);
 
-        // ventana 1
-        JLabel ventana1 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
-        ventana1.setBounds(posX + 30, posY + 15, 70, 400);
-        panelPrincipal.add(ventana1);
-
-        // ventana 2
-        JLabel ventana2 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
-        ventana2.setBounds(posX + 110, posY + 15, 70, 400);
-        panelPrincipal.add(ventana2);
-
-        // ventana 3
-        JLabel ventana3 = new JLabel(new ImageIcon("src/recursos/depositoBebida.png"));
-        ventana3.setBounds(posX + 190, posY + 15, 70, 400);
-        panelPrincipal.add(ventana3);
     }
 
     // BackEnd
@@ -281,10 +291,14 @@ public class ExpendedorNuevo {
         }
     }
 
-    public Moneda retornarMoneda() { // Metodo Retorno de moneda en depositoRetorno
-        Moneda aux = depositoRetorno;
-        depositoRetorno = null;
-        return aux;
+    public Moneda retornarMoneda() throws NoHayMonedaRetorno{ // Metodo Retorno de moneda en depositoRetorno
+        if (depositoRetorno != null) {
+            Moneda aux = depositoRetorno;
+            depositoRetorno = null;
+            return aux;
+        } else {
+            throw new NoHayMonedaRetorno();
+        }
     }
 
     public Moneda getVuelto() { // devuelve UNA moneda del deposito en caso de que este vacio retorna null
@@ -299,9 +313,35 @@ public class ExpendedorNuevo {
         depositoEspecial = bebida;
     }
 
-    public Bebida getBebida() { // Llamado por el boton PULL saca la bebida del deposito
-        Bebida aux = depositoEspecial;
-        depositoEspecial = null;
-        return aux;
+    public Bebida getBebida() throws NoHayBebidaDeposito{ // Llamado por el boton PULL saca la bebida del deposito
+        if (depositoEspecial != null) {
+            Bebida aux = depositoEspecial;
+            depositoEspecial = null;
+            return aux;
+        } else {
+            throw new NoHayBebidaDeposito();
+        }
+    }
+
+    public Bebida intentarSacarBebida() {
+        try {
+            Bebida aux = getBebida();
+            return aux;
+        } catch (NoHayBebidaDeposito e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+    public Moneda intentarRetornarMoneda() {
+        try {
+            Moneda aux = retornarMoneda(); //metodo retornar moneda deposito
+            return aux;
+        } catch (NoHayMonedaRetorno e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
