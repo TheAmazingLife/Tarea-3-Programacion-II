@@ -30,7 +30,6 @@ public class ExpendedorNuevo {
         // mostrarBebidas(); no habilitado
     }
 
-
     private void colocarBotones() {
 
         // ventana 1
@@ -141,14 +140,19 @@ public class ExpendedorNuevo {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                ingresarMoneda();
+
+                if (monedaIngresada == null) {
+                    ingresarMoneda();
+                    comprador.ingresarMoneda();
+                } else {
+                    System.out.println("No se puede ingresar otra moneda."); //Posible arreglo con exceptions?? :0
+                }
             }
         };
-        
 
         // Boton Vuelto
         ActionListener pulsarBotonRetorno = new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent ae) {
                 //panelPrincipal.monedaExpendedora();
@@ -288,7 +292,7 @@ public class ExpendedorNuevo {
         }
     }
 
-    public Moneda retornarMoneda() throws NoHayMonedaRetorno{ // Metodo Retorno de moneda en depositoRetorno
+    public Moneda retornarMoneda() throws NoHayMonedaRetorno { // Metodo Retorno de moneda en depositoRetorno
         depositoRetorno = monedaIngresada;
 
         if (depositoRetorno != null) {
@@ -309,7 +313,11 @@ public class ExpendedorNuevo {
         return precioBebidas;
     }
 
-    public void getBebida() throws NoHayBebidaDeposito{ // Llamado por el boton PULL saca la bebida del deposito
+    public void addBebida(Bebida bebida) {
+        depositoEspecial = bebida;
+    }
+
+    public void getBebida() throws NoHayBebidaDeposito { // Llamado por el boton PULL saca la bebida del deposito
         if (depositoEspecial != null) {
             asignarBebida();
             depositoEspecial = null;
