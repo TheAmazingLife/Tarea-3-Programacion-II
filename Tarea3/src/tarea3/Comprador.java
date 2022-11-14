@@ -31,7 +31,7 @@ public class Comprador {
         posYBilletera = 0;
         billeteraSetXY(posX, posY);
         this.panelPrincipal = panelPrincipal;
-        //visualizarComprador();
+        visualizarComprador();
         //colocarBebidasCompradas();
         colocarBilletera();
     }
@@ -149,7 +149,15 @@ public class Comprador {
         panelPrincipal.add(monedaVisualNueva);
         monedaVisual = monedaVisualNueva;
         panelPrincipal.repaint();
+        panelPrincipal.setComponentZOrder(monedaVisualNueva, 0);
 
+    }
+
+    public void ingresarMoneda() {
+        if (monedaVisual != null) {
+            panelPrincipal.remove(monedaVisual);
+            panelPrincipal.repaint();
+        }
     }
 
     public Moneda getMoneda() { // Para ser usado
