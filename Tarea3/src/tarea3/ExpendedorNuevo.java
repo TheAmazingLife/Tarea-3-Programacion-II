@@ -243,8 +243,7 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
-                            addBebida(bebida);
-                            asignarBebida();
+                            pasarDeposito(bebida);
                         } else {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
@@ -254,8 +253,7 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
-                            addBebida(bebida);
-                            asignarBebida();
+                            pasarDeposito(bebida);
                         } else {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
@@ -265,8 +263,7 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
-                            addBebida(bebida);
-                            asignarBebida();
+                            pasarDeposito(bebida);
                         } else {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
@@ -293,9 +290,11 @@ public class ExpendedorNuevo {
 
     public Moneda retornarMoneda() throws NoHayMonedaRetorno{ // Metodo Retorno de moneda en depositoRetorno
         depositoRetorno = monedaIngresada;
+
         if (depositoRetorno != null) {
             Moneda aux = depositoRetorno;
             depositoRetorno = null;
+            monedaIngresada = null;
             return aux;
         } else {
             throw new NoHayMonedaRetorno();
@@ -310,28 +309,21 @@ public class ExpendedorNuevo {
         return precioBebidas;
     }
 
-    public void addBebida(Bebida bebida) {
-        depositoEspecial = bebida;
-    }
-
-    public Bebida getBebida() throws NoHayBebidaDeposito{ // Llamado por el boton PULL saca la bebida del deposito
+    public void getBebida() throws NoHayBebidaDeposito{ // Llamado por el boton PULL saca la bebida del deposito
         if (depositoEspecial != null) {
-            Bebida aux = depositoEspecial;
+            asignarBebida();
             depositoEspecial = null;
-            return aux;
         } else {
             throw new NoHayBebidaDeposito();
         }
     }
 
-    public Bebida intentarSacarBebida() {
+    public void intentarSacarBebida() {
         try {
-            Bebida aux = getBebida();
-            return aux;
+            getBebida();
         } catch (NoHayBebidaDeposito e) {
             // TODO: handle exception
             System.out.println(e.getMessage());
-            return null;
         }
 
     }
@@ -346,6 +338,10 @@ public class ExpendedorNuevo {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    private void pasarDeposito(Bebida bebida) {
+        depositoEspecial = bebida;
     }
 
     private void asignarBebida() {
