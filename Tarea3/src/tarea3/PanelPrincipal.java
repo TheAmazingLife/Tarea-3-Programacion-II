@@ -13,7 +13,9 @@ public class PanelPrincipal extends JPanel {
         exp.graficaExpendedor(this);
         com = new Comprador(this);
         
-         JLabel wallpaper = new JLabel(new ImageIcon("src/recursos/wallpaperExpendedora.jpg"));
+        exp.setComprador(com); // Entregamos comprador a la expendedora
+
+        JLabel wallpaper = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/wallpaperExpendedora.jpg")));
         wallpaper.setLayout(null);
         wallpaper.setBounds(0, 0, 1280, 720);
         add(wallpaper);

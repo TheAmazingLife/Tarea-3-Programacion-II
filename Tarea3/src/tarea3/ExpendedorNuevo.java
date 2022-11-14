@@ -34,17 +34,17 @@ public class ExpendedorNuevo {
     private void colocarBotones() {
 
         // ventana 1
-        JButton ventana1 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        JButton ventana1 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
         ventana1.setBounds(posX + 30, posY + 15, 70, 400);
         panelPrincipal.add(ventana1);
 
         // ventana 2
-        JButton ventana2 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        JButton ventana2 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
         ventana2.setBounds(posX + 110, posY + 15, 70, 400);
         panelPrincipal.add(ventana2);
 
         // ventana 3
-        JButton ventana3 = new JButton(new ImageIcon("src/recursos/depositoBebida.png"));
+        JButton ventana3 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
         ventana3.setBounds(posX + 190, posY + 15, 70, 400);
         panelPrincipal.add(ventana3);
 
@@ -59,7 +59,7 @@ public class ExpendedorNuevo {
         panelPrincipal.add(botonPull);
 
         // boton cocacola
-        JButton botonCocacola = new JButton(new ImageIcon("src/recursos/botonCocacola.jpg")); // tamaño de imagen ya
+        JButton botonCocacola = new JButton(new ImageIcon(this.getClass().getResource("/recursos/botonCocacola.jpg"))); // tamaño de imagen ya
         // coincide con tamaño del
         // boton
         botonCocacola.setBounds(posX + 270, posY + 180, 60, 30);
@@ -69,7 +69,7 @@ public class ExpendedorNuevo {
         panelPrincipal.add(botonCocacola);
 
         // boton fanta
-        JButton botonFanta = new JButton(new ImageIcon("src/recursos/botonFanta.jpg")); // tamaño de imagen ya coincide
+        JButton botonFanta = new JButton(new ImageIcon(this.getClass().getResource("/recursos/botonFanta.jpg"))); // tamaño de imagen ya coincide
         // con tamaño del boton
         botonFanta.setBounds(posX + 270, posY + 220, 60, 30);
         botonFanta.setEnabled(true);
@@ -78,7 +78,7 @@ public class ExpendedorNuevo {
         panelPrincipal.add(botonFanta);
 
         // boton sprite
-        JButton botonSprite = new JButton(new ImageIcon("src/recursos/botonSprite.jpg")); // tamaño de imagen ya
+        JButton botonSprite = new JButton(new ImageIcon(this.getClass().getResource("/recursos/botonSprite.jpg"))); // tamaño de imagen ya
         // coincide con tamaño del
         // boton
         botonSprite.setBounds(posX + 270, posY + 260, 60, 30);
@@ -88,7 +88,7 @@ public class ExpendedorNuevo {
         panelPrincipal.add(botonSprite);
 
         // boton ranura de monedas
-        JButton botonRanura = new JButton(new ImageIcon("src/recursos.jpg")); // tamaño de imagen ya coincide con tamaño
+        JButton botonRanura = new JButton(new ImageIcon(this.getClass().getResource("/recursos/botonRanura.jpg"))); // tamaño de imagen ya coincide con tamaño
         // del boton
         botonRanura.setBounds(posX + 270, posY + 300, 30, 30);
         botonRanura.setEnabled(true);
@@ -97,7 +97,7 @@ public class ExpendedorNuevo {
         panelPrincipal.add(botonRanura);
 
         // boton vuelto
-        JButton botonVuelto = new JButton(new ImageIcon("src/recursos.jpg")); // tamaño de imagen ya coincide con tamaño
+        JButton botonVuelto = new JButton(new ImageIcon(this.getClass().getResource("/recursos/botonVuelto.jpg"))); // tamaño de imagen ya coincide con tamaño
         // del boton
         botonVuelto.setBounds(posX + 270, posY + 340, 30, 30);
         botonVuelto.setEnabled(true);
@@ -137,13 +137,13 @@ public class ExpendedorNuevo {
             }
         };
 
-        /* ActionListener pulsarRanuraMonedas = new ActionListener() {
+        ActionListener pulsarRanuraMonedas = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                panelPrincipal.monedaComprador();
+                ingresarMoneda();
             }
-        }; */
+        };
         
 
         // Boton Vuelto
@@ -159,12 +159,12 @@ public class ExpendedorNuevo {
         botonFanta.addActionListener(pulsarFanta);
         botonSprite.addActionListener(pulsarSprite);
         botonPull.addActionListener(pulsarPull);
-        //botonRanura.addActionListener(pulsarRanuraMonedas);
+        botonRanura.addActionListener(pulsarRanuraMonedas);
         botonVuelto.addActionListener(pulsarBotonRetorno);
     }
 
     private void colocarEtiquetas() {
-        JLabel expendedoraVisible = new JLabel(new ImageIcon("src/recursos/expendedor.jpg"));
+        JLabel expendedoraVisible = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/expendedor.jpg")));
         expendedoraVisible.setBounds(posX, posY, 350, 500);
         expendedoraVisible.setLayout(null);
         expendedoraVisible.setBackground(Color.orange);
@@ -185,6 +185,7 @@ public class ExpendedorNuevo {
     private Bebida depositoEspecial;
     private Moneda monedaIngresada;
     private Moneda depositoRetorno;
+    private Comprador comprador;
 
     public ExpendedorNuevo() {
 
@@ -209,10 +210,6 @@ public class ExpendedorNuevo {
             Bebida fanta = new Fanta(300 + i);
             this.fanta.addBebida(fanta);
         }
-    }
-
-    public void addMoneda(Moneda moneda) {
-        monedaIngresada = moneda;
     }
 
     public void intentarCompra(Moneda monedaIngresada, int cualBebida) {
@@ -247,6 +244,7 @@ public class ExpendedorNuevo {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
                             addBebida(bebida);
+                            asignarBebida();
                         } else {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
@@ -257,6 +255,7 @@ public class ExpendedorNuevo {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
                             addBebida(bebida);
+                            asignarBebida();
                         } else {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
@@ -267,6 +266,7 @@ public class ExpendedorNuevo {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
                             addBebida(bebida);
+                            asignarBebida();
                         } else {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
@@ -292,6 +292,7 @@ public class ExpendedorNuevo {
     }
 
     public Moneda retornarMoneda() throws NoHayMonedaRetorno{ // Metodo Retorno de moneda en depositoRetorno
+        depositoRetorno = monedaIngresada;
         if (depositoRetorno != null) {
             Moneda aux = depositoRetorno;
             depositoRetorno = null;
@@ -334,14 +335,29 @@ public class ExpendedorNuevo {
         }
 
     }
+
     public Moneda intentarRetornarMoneda() {
         try {
             Moneda aux = retornarMoneda(); //metodo retornar moneda deposito
+            System.out.println("Moneda retornada. " + aux);
             return aux;
         } catch (NoHayMonedaRetorno e) {
             // TODO: handle exception
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    private void asignarBebida() {
+        comprador.setBebida(depositoEspecial);
+    }
+
+    private void ingresarMoneda() {
+        monedaIngresada = comprador.getMoneda();
+        System.out.println("Ingresaste una moneda. " + monedaIngresada);
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
     }
 }
