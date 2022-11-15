@@ -72,8 +72,6 @@ public class Comprador {
 
         // moneda100
         JButton moneda100 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/moneda100.png"))); // tamaño de imagen ya coincide con tamaño del boton
-        System.out.println(posXBilletera + 50);
-        System.out.println(posYBilletera + 25);
         moneda100.setBounds(posXBilletera + 28, posYBilletera + 80, 50, 50);
         moneda100.setEnabled(true);
         moneda100.setMnemonic('1');
