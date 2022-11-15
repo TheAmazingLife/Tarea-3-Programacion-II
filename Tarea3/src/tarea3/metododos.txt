@@ -6,8 +6,8 @@ Atributos
 
     private int precioBebidas; - precio de las bebidas
 
-    private DepositoVuelto vueltoTotal; - deposito de monedas a devolver
-    private DepositoVuelto depositoMonedasCompras; - deposito de monedas
+    private DepositoVuelto vueltoTotal; - deposito de monedas a devolver al comprador
+    private DepositoVuelto depositoMonedasCompras; - deposito de monedas utilizadas para comprar
 
     private Bebida depositoEspecial; - almacena la bebida comprada
     private Moneda monedaIngresada; - almacena la moenda ingresada
@@ -17,6 +17,68 @@ Atributos
 Metodos
     public void intentarCompra(Moneda monedaIngresada, int cualBebida)
         intenta comprarBebida(monedaIngresada, cualBebida) en caso contrario se pasa la moneda al depositoRetorno y se imprime el error
-    public void comprarBebida(Moneda moneda, int cual)
+
+    public void comprarBebida(Moneda moneda, int cual) // !- analizar correcto funcionamiento
         compra la bebida, retorna excepciones en caso de fallas
-    public void setComprador(Comprador comprador) - asigna el comprador a 
+
+    public void calcularVuelto(Moneda moneda)
+        calcula vuelto y lo devuelve al DepositoVuelto vueltoTotal en monedas de 100
+
+    public Moneda retornarMoneda()
+        Retorna moneda en depositoRetorno en caso de que exista una moneda, si no imprime excepcion
+
+    public Moneda getVuelto()
+        devuelve UNA moneda del deposito en caso de que este vacio retorna null
+
+    public int getPrecioBebidas()
+        retorna precioBebidas el precio de las bebidas
+
+    public void addBebida(Bebida bebida) // ! metodo en desuso
+        agrega la bebida pasada al depositoEspecial
+
+    public void getBebida()
+        Llamado por el boton PULL saca la bebida del deposito en caso de que exista, si no retorna excepcion
+    
+    public void intentarSacarBebida()
+        intenta getBebida() si falla imprime la excepcion
+    
+    public Moneda intentarRetornarMoneda()
+        intentar retornarMoneda() retorna la moneda e imprime, si falla imrime la excepciony retorna nulo
+    // ? donde se queda la moneda retornada y en caso de, pasa a la mano?? que pasa si ya tiene una en la mano???
+
+    private void pasarDeposito(Bebida bebida)
+        agrega la bebida pasada al depositoEspecial
+    
+    private void ingresarMoneda()
+        ingresa la moneda desde la mano del comprador (com.getMoneda()) asigandola a monedaIngresada y la imprime
+
+    public void setComprador(Comprador comprador)
+        asigna el comprador a la variable comprador desde el panelPrincipals
+
+
+// ? error debido a metodo que no retorna nada, por ende nunca es nula
+se soluciona com metodo nativo o con metodo de usarMoneda
+o al calcular el vuelto se pasa la moneda a nula
+
+Comprar bebida solo recibe el parametro de cual, usa atributos nativos para su asignacion
+
+depositoEspecial cotiene la bebida comprada??
+
+Hecho hoy: 
+Ingreso moneda mejorado
+Metodos obsoletos eliminados
+Bug moneda infinita arreglado
+Metodo relleno Bebidas
+Devolver moneda a la mano del comprador (falta grafica)
+Bug enorme de DepositoBebida comprador arreglado
+
+TODO:
+Mostrar vuelto
+Boton vuelto
+Mostrar monedaRetorno en la mano del comprador
+Boton relleno bebidas (metodo listo solo falta implementar)
+Metodo relleno bebidas (pablo impkementar repaint a las bebidas);
+Metodo sacar moneda vuelto - Asignar monedas vuelto en la Chauchero del comprador
+Averiguar si comprar bebida retornaalgo o no necesariamente
+Visualizar Chauchero comprador
+Visualizar Bebidas tomadas comprador

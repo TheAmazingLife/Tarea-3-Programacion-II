@@ -287,7 +287,7 @@ public class ExpendedorNuevo {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                intentarCompra(monedaIngresada, 1);
+                intentarCompra(1);
             }
         };
 
@@ -295,7 +295,7 @@ public class ExpendedorNuevo {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                intentarCompra(monedaIngresada, 2);
+                intentarCompra(2);
             }
         };
 
@@ -303,7 +303,7 @@ public class ExpendedorNuevo {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                intentarCompra(monedaIngresada, 3);
+                intentarCompra(3);
             }
         };
 
@@ -319,13 +319,8 @@ public class ExpendedorNuevo {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-
-                if (monedaIngresada == null) {
-                    ingresarMoneda();
-                    comprador.ingresarMoneda();
-                } else {
-                    System.out.println("No se puede ingresar otra moneda."); //Posible arreglo con exceptions?? :0
-                }
+                //en caso de que no hayan monedas en el deposito la inegresa
+                intentarIngresarMoneda();
             }
         };
 
@@ -334,7 +329,6 @@ public class ExpendedorNuevo {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                //panelPrincipal.monedaExpendedora();
                 intentarRetornarMoneda();
             }
         };
@@ -390,40 +384,33 @@ public class ExpendedorNuevo {
         this.precioBebidas = 800; // Definir precio
         numBebidas = 5;
         // ! Temporal
-        for (int i = 0; i < numBebidas; i++) { // relleno de maquina con bebidas
-            Bebida cocacolaa = new CocaCola(100 + i);
-            this.cocacola.addBebida(cocacolaa);
-            Bebida spritee = new Sprite(200 + i);
-            this.sprite.addBebida(spritee);
-            Bebida fantaa = new Fanta(300 + i);
-            this.fanta.addBebida(fantaa);
-        }
+        intentarRellenarDeposito(1);
+        intentarRellenarDeposito(2);
+        intentarRellenarDeposito(3);
     }
 
-    public void intentarCompra(Moneda monedaIngresada, int cualBebida) {
+    public void intentarCompra(int cualBebida) {
         try {
             // Intenta comprar la bebida e imprime si se realizo con exito
-            comprarBebida(monedaIngresada, cualBebida);
+            comprarBebida(cualBebida);
             monedaIngresada = null;
             System.out.println("Compra Realizada con exito.");
         } catch (PagoIncorrectoException | PagoInsuficienteException | NoHayBebidaException e) {
-            // En caso de que no se concrete la compra se deja el sabor como null
-            depositoRetorno = monedaIngresada;
-            monedaIngresada = null;
+            /* depositoRetorno = monedaIngresada;
+            monedaIngresada = null; */
             System.out.println(e.getMessage());
         }
     }
 
-    public void comprarBebida(Moneda moneda, int cual) throws PagoIncorrectoException, NoHayBebidaException, PagoInsuficienteException { // compra la bebida,
+    public void comprarBebida(int cual) throws PagoIncorrectoException, NoHayBebidaException, PagoInsuficienteException { // compra la bebida,
         // retorna excepciones en caso de fallas
         Bebida bebida = null;
-        if (moneda == null) {
+        if (monedaIngresada == null) {
             throw new PagoIncorrectoException("No se puede comprar una bebida sin dinero."); // PagoIncorrectoException
         } else {
-            if (moneda.getValor() >= precioBebidas) {
+            if (monedaIngresada.getValor() >= precioBebidas) {
                 // en caso de no haber bebidas o numero erroneo NoHayBebidaException y devuelve
-                // la moneda al deposito
-
+                // la monedaIngresada al deposito
                 switch (cual) {
                     case 1:
                         System.out.print("COCACOLA: ");
@@ -433,12 +420,13 @@ public class ExpendedorNuevo {
                             JLabel bebida1 = cocacola.getBebidaLabel();
                             panelPrincipal.remove(bebida1);
 
-                            calcularVuelto(moneda);
-                            depositoMonedasCompras.add(moneda);
-                            moneda = null; // la moneda fue gastada 
                             pasarDeposito(bebida);
+                            calcularVuelto(); // calcula vuelto en monedas de 100
+                            depositoMonedasCompras.add(monedaIngresada); //deposita la moneda en las monedas usadas
+                            monedaIngresada = null; // la monedaIngresada fue gastada 
                         } else {
-                            vueltoTotal.add(moneda);
+                            // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
+                            // ! BORRADO vueltoTotal.add(monedaIngresada);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                         }
                         break;
@@ -451,12 +439,13 @@ public class ExpendedorNuevo {
                             JLabel bebida2 = sprite.getBebidaLabel();
                             panelPrincipal.remove(bebida2);
 
-                            calcularVuelto(moneda);
-                            depositoMonedasCompras.add(moneda);
-                            moneda = null; // la moneda fue gastada
                             pasarDeposito(bebida);
+                            calcularVuelto();
+                            depositoMonedasCompras.add(monedaIngresada);
+                            monedaIngresada = null; // la monedaIngresada fue gastada
                         } else {
-                            vueltoTotal.add(moneda);
+                            // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
+                            // ! BORRADO vueltoTotal.add(monedaIngresada);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                         }
                         break;
@@ -468,39 +457,60 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             JLabel bebida3 = fanta.getBebidaLabel();
                             panelPrincipal.remove(bebida3);
-
-                            calcularVuelto(moneda);
-                            depositoMonedasCompras.add(moneda);
-                            moneda = null; // la moneda fue gastada
+                            
                             pasarDeposito(bebida);
+                            calcularVuelto();
+                            depositoMonedasCompras.add(monedaIngresada);
+                            monedaIngresada = null; // la monedaIngresada fue gastada
                         } else {
-                            vueltoTotal.add(moneda);
+                            // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
+                            // ! BORRADO vueltoTotal.add(monedaIngresada);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                         }
                         break;
-
-                    default: // caso numero erroneo
-                        vueltoTotal.add(moneda);
-                        throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
+                    // ? Caso por defecto nunca usado se puede borrar
                 }
             } else {
-                vueltoTotal.add(moneda);
                 throw new PagoIncorrectoException("Saldo insuficiente."); // PagoInsuficienteException
             }
         }
         mostrarBebidas();
         panelPrincipal.repaint();
     }
-
-    public void calcularVuelto(Moneda moneda) { // calcula vuelto y lo devuelve al DepositoVuelto vueltoTotal en monedas
-        // de 100
-        int monedas100 = (moneda.getValor() - precioBebidas) / 100;
-        for (int i = 0; i < monedas100; i++) {
-            Moneda monedaVuelto = new Moneda100();
-            vueltoTotal.add(monedaVuelto);
+    // TODO: arreglar sacar bebida, imprime error inmenso :c
+    public void intentarSacarBebida() {
+        try {
+            getBebida();
+        } catch (NoHayBebidaDeposito e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+        }
+        
+    }
+    
+    public void getBebida() throws NoHayBebidaDeposito { // Llamado por el boton PULL saca la bebida del deposito
+        if (depositoEspecial != null) {
+            asignarBebida();
+            System.out.println("Bebida sacada: " + depositoEspecial);
+            depositoEspecial = null;
+        } else {
+            throw new NoHayBebidaDeposito();
         }
     }
-
+    
+    public Moneda intentarRetornarMoneda() {
+        try {
+            Moneda aux = retornarMoneda(); //metodo retornar monedaIngresada deposito
+            System.out.println("Moneda retornada. " + aux);
+            // TODO: pasarle la moneda aux al comprador y repintar la mano, cambiar el tipo de retorno
+            return aux;
+        } catch (NoHayMonedaRetorno e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
     public Moneda retornarMoneda() throws NoHayMonedaRetorno { // Metodo Retorno de moneda en depositoRetorno
         depositoRetorno = monedaIngresada;
 
@@ -513,6 +523,40 @@ public class ExpendedorNuevo {
             throw new NoHayMonedaRetorno();
         }
     }
+    
+    private void intentarIngresarMoneda() {
+        try {
+            ingresarMoneda();
+        } catch (NoDisponibleIngresarMoneda | NoHayMonedaComprador e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void ingresarMoneda() throws NoDisponibleIngresarMoneda, NoHayMonedaComprador {
+        Moneda monedaComprador = comprador.getMoneda();
+        if (monedaComprador != null) { // En caso de que el comprador tenga moneda en la mano
+            if (monedaIngresada == null) { // Y si no hay monedaIngresada, ingresa la moneda
+                monedaIngresada = monedaComprador;
+                System.out.println("Ingresaste una moneda. " + monedaIngresada);
+                comprador.ingresarMoneda(); // Acualiza Frame de la mano del comprador
+            } else {
+                comprador.addMoneda(monedaComprador); //Le retorna la moneda al comprador en caso de no ingresarse
+                throw new NoDisponibleIngresarMoneda();
+            }
+        } else {
+            throw new NoHayMonedaComprador();
+        }
+    }
+
+    public void calcularVuelto() { // calcula vuelto y lo devuelve al DepositoVuelto vueltoTotal en monedas
+        // de 100
+        int monedas100 = (monedaIngresada.getValor() - precioBebidas) / 100;
+        for (int i = 0; i < monedas100; i++) {
+            Moneda monedaVuelto = new Moneda100();
+            vueltoTotal.add(monedaVuelto);
+        }
+        monedaIngresada = null; // se gasta la moneda
+    }
 
     public Moneda getVuelto() { // devuelve UNA moneda del deposito en caso de que este vacio retorna null
         return vueltoTotal.getVuelto(); // se rescatan una a una
@@ -521,40 +565,9 @@ public class ExpendedorNuevo {
     public int getPrecioBebidas() { // retorna precioBebidas el precio de las bebidas
         return precioBebidas;
     }
-
-    public void addBebida(Bebida bebida) {
-        depositoEspecial = bebida;
-    }
-
-    public void getBebida() throws NoHayBebidaDeposito { // Llamado por el boton PULL saca la bebida del deposito
-        if (depositoEspecial != null) {
-            asignarBebida();
-            depositoEspecial = null;
-        } else {
-            throw new NoHayBebidaDeposito();
-        }
-    }
-
-    public void intentarSacarBebida() {
-        try {
-            getBebida();
-        } catch (NoHayBebidaDeposito e) {
-            // TODO: handle exception
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    public Moneda intentarRetornarMoneda() {
-        try {
-            Moneda aux = retornarMoneda(); //metodo retornar moneda deposito
-            System.out.println("Moneda retornada. " + aux);
-            return aux;
-        } catch (NoHayMonedaRetorno e) {
-            // TODO: handle exception
-            System.out.println(e.getMessage());
-            return null;
-        }
+    
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
     }
 
     private void pasarDeposito(Bebida bebida) {
@@ -564,13 +577,47 @@ public class ExpendedorNuevo {
     private void asignarBebida() {
         comprador.setBebida(depositoEspecial);
     }
-
-    private void ingresarMoneda() {
-        monedaIngresada = comprador.getMoneda();
-        System.out.println("Ingresaste una moneda. " + monedaIngresada);
+    
+    private void intentarRellenarDeposito(int cualDeposito) {
+        try {
+            rellenarDeposito(cualDeposito);
+        } catch (NoSePuedeRellenarDeposito e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void setComprador(Comprador comprador) {
-        this.comprador = comprador;
+    private void rellenarDeposito(int cualDeposito) throws NoSePuedeRellenarDeposito{
+        switch (cualDeposito) {
+            case 1:
+                if (cocacola.tieneBebidas() != true) {
+                    for (int i = 0; i < numBebidas; i++) {
+                        Bebida cocacolaa = new CocaCola(100 + i);
+                        this.cocacola.addBebida(cocacolaa);
+                    }
+                } else {
+                    throw new NoSePuedeRellenarDeposito();
+                }
+                break;
+            case 2:
+                if (sprite.tieneBebidas() != true) {
+                    for (int i = 0; i < numBebidas; i++) {
+                        Bebida spritee = new Sprite(200 + i);
+                        this.sprite.addBebida(spritee);
+                    }
+                } else {
+                    throw new NoSePuedeRellenarDeposito();
+                }
+                break;
+            case 3:
+                if (fanta.tieneBebidas() != true) {
+                    for (int i = 0; i < numBebidas; i++) { // relleno de maquina con bebidas
+                        Bebida fantaa = new Fanta(300 + i);
+                        this.fanta.addBebida(fantaa);
+                    }
+                } else {
+                    throw new NoSePuedeRellenarDeposito();
+                }
+                break;
+        }
     }
 }

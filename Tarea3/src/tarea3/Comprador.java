@@ -22,10 +22,12 @@ public class Comprador {
     // todos los panelDerecho se sustituyen por this ya que Comprador es un panel derecho
     public Comprador(JPanel panelPrincipal) {
         moneda = null;
+        depositoBebidas = new DepositoBebida();
+        depositoVuelto = new DepositoVuelto();
+
         monedaVisual = null;
         monedaVisualNueva = null;
-        depositoBebidas = null;
-        depositoVuelto = null;
+
         compradorSetXY(640, 50);
         posXBilletera = 0;
         posYBilletera = 0;

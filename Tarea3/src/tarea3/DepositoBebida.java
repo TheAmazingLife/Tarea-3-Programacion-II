@@ -54,6 +54,13 @@ public class DepositoBebida {
         return deposito.size();
     }
 
+    public boolean tieneBebidas() {
+        if (deposito.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public JLabel seeBebidaLabel(int i) {
         return depositoVisual.get(i);
     }
