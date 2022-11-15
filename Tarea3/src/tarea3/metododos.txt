@@ -1,0 +1,22 @@
+Atributos
+    Depositos de bebida: CocaCola, Sprite y Fanta
+    private DepositoBebida cocacola;
+    private DepositoBebida sprite;
+    private DepositoBebida fanta;
+
+    private int precioBebidas; - precio de las bebidas
+
+    private DepositoVuelto vueltoTotal; - deposito de monedas a devolver
+    private DepositoVuelto depositoMonedasCompras; - deposito de monedas
+
+    private Bebida depositoEspecial; - almacena la bebida comprada
+    private Moneda monedaIngresada; - almacena la moenda ingresada
+    private Moneda depositoRetorno; - almacena la moneda en caso de retorno
+    private Comprador comprador; - almacena el comprador
+    private int numBebidas; - cantidad de bebidas en la expendedora
+Metodos
+    public void intentarCompra(Moneda monedaIngresada, int cualBebida)
+        intenta comprarBebida(monedaIngresada, cualBebida) en caso contrario se pasa la moneda al depositoRetorno y se imprime el error
+    public void comprarBebida(Moneda moneda, int cual)
+        compra la bebida, retorna excepciones en caso de fallas
+    public void setComprador(Comprador comprador) - asigna el comprador a 

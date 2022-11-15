@@ -220,7 +220,7 @@ public class ExpendedorNuevo {
         try {
             // Intenta comprar la bebida e imprime si se realizo con exito
             comprarBebida(monedaIngresada, cualBebida);
-            monedaIngresada = null; // la moneda fue gastada
+            monedaIngresada = null;
             System.out.println("Compra Realizada con exito.");
         } catch (PagoIncorrectoException | PagoInsuficienteException | NoHayBebidaException e) {
             // En caso de que no se concrete la compra se deja el sabor como null
@@ -247,6 +247,7 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
+                            moneda = null; // la moneda fue gastada 
                             pasarDeposito(bebida);
                         } else {
                             vueltoTotal.add(moneda);
@@ -257,6 +258,7 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
+                            moneda = null; // la moneda fue gastada
                             pasarDeposito(bebida);
                         } else {
                             vueltoTotal.add(moneda);
@@ -267,6 +269,7 @@ public class ExpendedorNuevo {
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
+                            moneda = null; // la moneda fue gastada
                             pasarDeposito(bebida);
                         } else {
                             vueltoTotal.add(moneda);
