@@ -9,6 +9,7 @@ package tarea3;
 // - addBebida(Bebida bebida) agrega bebida al ArrayList<Bebida> deposito
 // - getBebida() devuelve una bebida en caso de que hayan en el deposito, en caso contrario retorna `null`
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class DepositoBebida {
 
@@ -23,7 +24,7 @@ public class DepositoBebida {
     }
 
     public Bebida getBebida() { // devuelve una bebida en caso de que hayan en el deposito, en caso contrario
-                                // retorna `null`
+        // retorna `null`
         if (deposito.isEmpty()) {
             return null;
         } else {
@@ -32,4 +33,9 @@ public class DepositoBebida {
             return bebida;
         }
     }
+
+    public int getSize() {
+        return deposito.size();
+    }
+
 }

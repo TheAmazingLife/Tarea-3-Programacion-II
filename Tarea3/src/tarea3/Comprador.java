@@ -148,9 +148,8 @@ public class Comprador {
         monedaVisualNueva.setBounds(posX + 200, posY + 260, 50, 50);
         panelPrincipal.add(monedaVisualNueva);
         monedaVisual = monedaVisualNueva;
-        panelPrincipal.repaint();
         panelPrincipal.setComponentZOrder(monedaVisualNueva, 0);
-
+        panelPrincipal.repaint();
     }
 
     public void ingresarMoneda() {

@@ -2,6 +2,7 @@ package tarea3;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -12,11 +13,15 @@ public class ExpendedorNuevo {
     // FrontEnd
     private JPanel panelPrincipal;
     private int posX, posY;
+    private int cocacolaX, cocacolaY;
+    private int fantaX, fantaY;
+    private int spriteX, spriteY;
 
     public void graficaExpendedor(JPanel panelPrincipal) {
         expendedorSetXY(145, 90);
         this.panelPrincipal = panelPrincipal;
         visualizarExpendedora();
+
     }
 
     public void expendedorSetXY(int x, int y) {
@@ -27,24 +32,50 @@ public class ExpendedorNuevo {
     private void visualizarExpendedora() { // Agrega el panel expendedora
         colocarBotones();
         colocarEtiquetas();
-        // mostrarBebidas(); no habilitado
+        //llenarCocacola();
+        // llenarFanta();
+        //llenarSprite();
     }
+/*
+    private void llenarCocacola() {
 
+        //botellaCocacola = setText(new ImageIcon(this.getClass().getResource("/recursos/cocacola.png")));
+        JLabel cocacolaa;
+        for (int i = 0; i < numBebidas; i++) { // relleno de maquina con bebidas
+            cocacolaa = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/cocacola.png")));
+            cocacolaa.setBounds(cocacolaX + 17, cocacolaY + 20 * i, 30, 60);
+            this.cocacola.addBebidaLabel(cocacolaa);
+            panelPrincipal.add(cocacolaa.mostrarBebida(i));
+        }
+        for (int i = 0; i < numBebidas; i++) {
+            cocacolaa.mostrarBebida(i).setBounds(cocacolaX, cocacolaY, 30, 60);
+            panelPrincipal.add(cocacolaa.mostrarBebida(i));
+        }
+
+    }
+*/
     private void colocarBotones() {
 
         // ventana 1
         JButton ventana1 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
-        ventana1.setBounds(posX + 30, posY + 15, 70, 400);
+        cocacolaX = posX + 30;
+        cocacolaY = posY + 15;
+        ventana1.setBounds(cocacolaX, cocacolaY, 70, 400);
         panelPrincipal.add(ventana1);
 
         // ventana 2
         JButton ventana2 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
-        ventana2.setBounds(posX + 110, posY + 15, 70, 400);
+        fantaX = posX + 110;
+        fantaY = posY + 15;
+        ventana2.setBounds(fantaX, fantaY, 70, 400);
         panelPrincipal.add(ventana2);
 
         // ventana 3
         JButton ventana3 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
-        ventana3.setBounds(posX + 190, posY + 15, 70, 400);
+        spriteX = posX + 190;
+        spriteY = posY + 15;
+
+        ventana3.setBounds(spriteX, spriteY, 70, 400);
         panelPrincipal.add(ventana3);
 
         // Boton PULL
@@ -104,6 +135,102 @@ public class ExpendedorNuevo {
         botonVuelto.setMnemonic('v');
         panelPrincipal.add(botonVuelto);
 
+        MouseListener oyenteVentana1 = new MouseListener() {
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+        };
+
+        MouseListener oyenteVentana2 = new MouseListener() {
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+        };
+
+        MouseListener oyenteVentana3 = new MouseListener() {
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panelPrincipal.setComponentZOrder(ventana1, 1);
+                panelPrincipal.repaint();
+            }
+        };
+
         ActionListener pulsarCocacola = new ActionListener() {
 
             @Override
@@ -159,6 +286,10 @@ public class ExpendedorNuevo {
                 intentarRetornarMoneda();
             }
         };
+
+        ventana1.addMouseListener(oyenteVentana1);
+        ventana2.addMouseListener(oyenteVentana2);
+        ventana3.addMouseListener(oyenteVentana3);
         botonCocacola.addActionListener(pulsarCocacola);
         botonFanta.addActionListener(pulsarFanta);
         botonSprite.addActionListener(pulsarSprite);
@@ -190,6 +321,7 @@ public class ExpendedorNuevo {
     private Moneda monedaIngresada;
     private Moneda depositoRetorno;
     private Comprador comprador;
+    private int numBebidas;
 
     public ExpendedorNuevo() {
 
@@ -204,15 +336,15 @@ public class ExpendedorNuevo {
         depositoRetorno = null;
         // ! Temporal
         this.precioBebidas = 800; // Definir precio
-        int numBebidas = 5;
+        numBebidas = 5;
         // ! Temporal
         for (int i = 0; i < numBebidas; i++) { // relleno de maquina con bebidas
-            Bebida cocacola = new CocaCola(100 + i);
-            this.cocacola.addBebida(cocacola);
+            Bebida cocacolaa = new CocaCola(100 + i);
+            this.cocacola.addBebida(cocacolaa);
             Bebida spritee = new Sprite(200 + i);
             this.sprite.addBebida(spritee);
-            Bebida fanta = new Fanta(300 + i);
-            this.fanta.addBebida(fanta);
+            Bebida fantaa = new Fanta(300 + i);
+            this.fanta.addBebida(fantaa);
         }
     }
 
@@ -241,9 +373,12 @@ public class ExpendedorNuevo {
             if (moneda.getValor() >= precioBebidas) {
                 // en caso de no haber bebidas o numero erroneo NoHayBebidaException y devuelve
                 // la moneda al deposito
+
                 switch (cual) {
                     case 1:
                         bebida = cocacola.getBebida();
+                        System.out.print("COCACOLA: ");
+                        System.out.println(cocacola.getSize());
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
@@ -252,8 +387,11 @@ public class ExpendedorNuevo {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                         }
+                        break;
                     case 2:
                         bebida = sprite.getBebida();
+                        System.out.print("SPRITE: ");
+                        System.out.println(sprite.getSize());
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
@@ -262,8 +400,12 @@ public class ExpendedorNuevo {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                         }
+                        break;
+
                     case 3:
                         bebida = fanta.getBebida();
+                        System.out.print("FANTA: ");
+                        System.out.println(fanta.getSize());
                         if (bebida != null) {
                             calcularVuelto(moneda);
                             depositoMonedasCompras.add(moneda);
@@ -272,8 +414,11 @@ public class ExpendedorNuevo {
                             vueltoTotal.add(moneda);
                             throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                         }
+                        break;
+
                     default: // caso numero erroneo
                         vueltoTotal.add(moneda);
+                        System.out.println("ay");
                         throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                 }
             } else {
