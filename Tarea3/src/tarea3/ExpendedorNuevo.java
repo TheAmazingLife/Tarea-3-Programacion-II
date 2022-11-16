@@ -352,7 +352,6 @@ public class ExpendedorNuevo {
         expendedoraVisible.setBounds(posX, posY, 350, 500);
         expendedoraVisible.setLayout(null);
         panelPrincipal.add(expendedoraVisible);
-
     }
 
     // BackEnd
@@ -399,91 +398,95 @@ public class ExpendedorNuevo {
             comprarBebida(cualBebida);
             monedaIngresada = null;
             System.out.println("Compra Realizada con exito.");
-        } catch (PagoIncorrectoException | PagoInsuficienteException | NoHayBebidaException e) {
+        } catch (PagoIncorrectoException | PagoInsuficienteException | NoHayBebidaException | DepositoEspecialLlenoException e) {
             /* depositoRetorno = monedaIngresada;
             monedaIngresada = null; */
             System.out.println(e.getMessage());
         }
     }
 
-    public void comprarBebida(int cual) throws PagoIncorrectoException, NoHayBebidaException, PagoInsuficienteException { // compra la bebida,
+    public void comprarBebida(int cual) throws PagoIncorrectoException, NoHayBebidaException, PagoInsuficienteException, DepositoEspecialLlenoException { // compra la bebida,
         // retorna excepciones en caso de fallas
         Bebida bebida = null;
         if (monedaIngresada == null) {
             throw new PagoIncorrectoException("No se puede comprar una bebida sin dinero."); // PagoIncorrectoException
         } else {
-            if (monedaIngresada.getValor() >= precioBebidas) {
-                // en caso de no haber bebidas o numero erroneo NoHayBebidaException y devuelve
-                // la monedaIngresada al deposito
-                switch (cual) {
-                    case 1:
-                        System.out.print("COCACOLA: ");
-                        System.out.println(cocacola.getSize());
-                        bebida = cocacola.getBebida();
-                        if (bebida != null) {
-                            JLabel bebida1 = cocacola.getBebidaLabel();
-                            pasarDeposito(bebida);
-                            pasarDepositoLabel(bebida1);
-                            panelPrincipal.remove(bebida1);
-                            calcularVuelto(); // calcula vuelto en monedas de 100
-                            depositoMonedasCompras.add(monedaIngresada); //deposita la moneda en las monedas usadas
-                            monedaIngresada = null; // la monedaIngresada fue gastada 
-                        } else {
-                            // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
-                            // ! BORRADO vueltoTotal.add(monedaIngresada);
-                            throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
-                        }
-                        break;
-                    case 2:
-                        System.out.print("SPRITE: ");
-                        System.out.println(sprite.getSize());
-                        bebida = sprite.getBebida();
-
-                        if (bebida != null) {
-                            JLabel bebida2 = sprite.getBebidaLabel();
-                            pasarDeposito(bebida);
-                            pasarDepositoLabel(bebida2);
-                            panelPrincipal.remove(bebida2);
-                            calcularVuelto();
-                            depositoMonedasCompras.add(monedaIngresada);
-                            monedaIngresada = null; // la monedaIngresada fue gastada
-                        } else {
-                            // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
-                            // ! BORRADO vueltoTotal.add(monedaIngresada);
-                            throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
-                        }
-                        break;
-
-                    case 3:
-                        System.out.print("FANTA: ");
-                        System.out.println(fanta.getSize());
-                        bebida = fanta.getBebida();
-                        if (bebida != null) {
-                            JLabel bebida3 = fanta.getBebidaLabel();
-
-                            pasarDeposito(bebida);
-                            pasarDepositoLabel(bebida3);
-                            panelPrincipal.remove(bebida3);
-                            calcularVuelto();
-                            depositoMonedasCompras.add(monedaIngresada);
-                            monedaIngresada = null; // la monedaIngresada fue gastada
-                        } else {
-                            // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
-                            // ! BORRADO vueltoTotal.add(monedaIngresada);
-                            throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
-                        }
-                        break;
-                    // ? Caso por defecto nunca usado se puede borrar
-                }
+            if (depositoEspecial != null) {
+                throw new DepositoEspecialLlenoException("Ya hay una bebida en el deposito."); // DepositoEspecialLlenoException
             } else {
-                throw new PagoIncorrectoException("Saldo insuficiente."); // PagoInsuficienteException
+                if (monedaIngresada.getValor() >= precioBebidas) {
+                    // en caso de no haber bebidas o numero erroneo NoHayBebidaException y devuelve
+                    // la monedaIngresada al deposito
+                    switch (cual) {
+                        case 1:
+                            System.out.print("COCACOLA: ");
+                            System.out.println(cocacola.getSize());
+                            bebida = cocacola.getBebida();
+                            if (bebida != null) {
+                                JLabel bebida1 = cocacola.getBebidaLabel();
+                                pasarDeposito(bebida);
+                                pasarDepositoLabel(bebida1);
+                                panelPrincipal.remove(bebida1);
+                                calcularVuelto(); // calcula vuelto en monedas de 100
+                                System.out.println("VUELTO, monedas de 100 = " + vueltoTotal.getSize());
+                                depositoMonedasCompras.add(monedaIngresada); //deposita la moneda en las monedas usadas
+                                monedaIngresada = null; // la monedaIngresada fue gastada 
+                            } else {
+                                // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
+                                // ! BORRADO vueltoTotal.add(monedaIngresada);
+                                throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
+                            }
+                            break;
+                        case 2:
+                            System.out.print("SPRITE: ");
+                            System.out.println(sprite.getSize());
+                            bebida = sprite.getBebida();
+
+                            if (bebida != null) {
+                                JLabel bebida2 = sprite.getBebidaLabel();
+                                pasarDeposito(bebida);
+                                pasarDepositoLabel(bebida2);
+                                panelPrincipal.remove(bebida2);
+                                calcularVuelto();
+                                depositoMonedasCompras.add(monedaIngresada);
+                                monedaIngresada = null; // la monedaIngresada fue gastada
+                            } else {
+                                // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
+                                // ! BORRADO vueltoTotal.add(monedaIngresada);
+                                throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
+                            }
+                            break;
+
+                        case 3:
+                            System.out.print("FANTA: ");
+                            System.out.println(fanta.getSize());
+                            bebida = fanta.getBebida();
+                            if (bebida != null) {
+                                JLabel bebida3 = fanta.getBebidaLabel();
+
+                                pasarDeposito(bebida);
+                                pasarDepositoLabel(bebida3);
+                                panelPrincipal.remove(bebida3);
+                                calcularVuelto();
+
+                                depositoMonedasCompras.add(monedaIngresada);
+                                monedaIngresada = null; // la monedaIngresada fue gastada
+                            } else {
+                                // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
+                                // ! BORRADO vueltoTotal.add(monedaIngresada);
+                                throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
+                            }
+                    }
+                } else {
+                    throw new PagoIncorrectoException("Saldo insuficiente."); // PagoInsuficienteException
+                }
             }
         }
         mostrarBebidas();
         panelPrincipal.repaint();
     }
-
     // TODO: arreglar sacar bebida, imprime error inmenso :c
+
     public void intentarSacarBebida() {
         try {
             getBebida();
@@ -523,13 +526,13 @@ public class ExpendedorNuevo {
         JLabel monedaVisual = null;
         switch (aux) {
             case "class tarea3.Moneda100":
-                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda100.png")));
+                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda100Vuelto.png")));
                 break;
             case "class tarea3.Moneda500":
-                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda500.png")));
+                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda500Vuelto.png")));
                 break;
             case "class tarea3.Moneda1000":
-                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda1000.png")));
+                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda1000Vuelto.png")));
                 break;
         }
         return monedaVisual;
@@ -537,15 +540,22 @@ public class ExpendedorNuevo {
 
     public Moneda retornarMoneda() throws NoHayMonedaRetorno { // Metodo Retorno de moneda en depositoRetorno
         depositoRetorno = monedaIngresada;
-
+        Moneda aux = null;
         if (depositoRetorno != null) {
-            Moneda aux = depositoRetorno;
+            aux = depositoRetorno;
             depositoRetorno = null;
             monedaIngresada = null;
-            return aux;
         } else {
-            throw new NoHayMonedaRetorno();
+            if (vueltoTotal.getSize() != 0) {
+                aux = getVuelto();
+                depositoRetorno = null;
+                monedaIngresada = null;
+            } else {
+                throw new NoHayMonedaRetorno();
+            }
         }
+        return aux;
+
     }
 
     private void intentarIngresarMoneda() {
@@ -572,8 +582,7 @@ public class ExpendedorNuevo {
         }
     }
 
-    public void calcularVuelto() { // calcula vuelto y lo devuelve al DepositoVuelto vueltoTotal en monedas
-        // de 100
+    public void calcularVuelto() { // calcula vuelto y lo devuelve al DepositoVuelto vueltoTotal en monedas de 100
         int monedas100 = (monedaIngresada.getValor() - precioBebidas) / 100;
         for (int i = 0; i < monedas100; i++) {
             Moneda monedaVuelto = new Moneda100();

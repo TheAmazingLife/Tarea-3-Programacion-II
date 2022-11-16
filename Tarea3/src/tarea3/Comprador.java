@@ -233,13 +233,17 @@ public class Comprador {
 
     public void mostrarVuelto() {
         JLabel auxLabel;
+        int aux = 0;
         // muestra todas las bebidas compradas
         for (int i = 0; i < depositoVuelto.getSize(); i++) { // relleno de maquina con bebidas
             auxLabel = depositoVuelto.seeMonedaLabel(i);
-
-            //auxLabel.setBounds(cocacolaX + 20, cocacolaY + 30 + 70 * i, 30, 60); // serie menor  a mayor
-            auxLabel.setBounds(posXDepositoMonedas + 10, posYDepositoMonedas + 310 - 70 * i, 50, 50);  // serie mayor a menor
-
+            System.out.println(depositoVuelto.getSize());
+            if (i < 12) {
+                auxLabel.setBounds(posXDepositoMonedas + 10, posYDepositoMonedas + 350 - 30 * i, 20, 20);  // serie mayor a menor
+            } else {
+                auxLabel.setBounds(posXDepositoMonedas + 40, posYDepositoMonedas + 350 - 30 * aux, 20, 20);  // serie mayor a menor
+                aux++;
+            }
             panelPrincipal.add(auxLabel);
             panelPrincipal.setComponentZOrder(auxLabel, 0);
             panelPrincipal.repaint();
