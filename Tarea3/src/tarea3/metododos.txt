@@ -71,14 +71,13 @@ Bug moneda infinita arreglado
 Metodo relleno Bebidas
 Devolver moneda a la mano del comprador (falta grafica)
 Bug enorme de DepositoBebida comprador arreglado
+Boton vuelto
+Averiguar si comprar bebida retornaalgo o no necesariamente NO TIENE XD
 
 TODO:
 Mostrar vuelto
-Boton vuelto
-Mostrar monedaRetorno en la mano del comprador
 Boton relleno bebidas (metodo listo solo falta implementar)
 Metodo relleno bebidas (pablo impkementar repaint a las bebidas);
 Metodo sacar moneda vuelto - Asignar monedas vuelto en la Chauchero del comprador
-Averiguar si comprar bebida retornaalgo o no necesariamente
 Visualizar Chauchero comprador
 Visualizar Bebidas tomadas comprador
