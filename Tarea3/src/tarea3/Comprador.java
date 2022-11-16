@@ -1,9 +1,5 @@
 package tarea3;
 
-/* 
- * colocarPaneDerecho() metodo sustituido por constructor de clase Comprador
- */
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -21,7 +17,6 @@ public class Comprador {
     private DepositoBebida depositoBebidas;
     private DepositoVuelto depositoVuelto;
 
-    // todos los panelDerecho se sustituyen por this ya que Comprador es un panel derecho
     public Comprador(JPanel panelPrincipal) {
         moneda = null;
         depositoBebidas = new DepositoBebida();
@@ -46,6 +41,7 @@ public class Comprador {
         colocarBilletera();
     }
 
+    // FrontEnd
     public void compradorSetXY(int x, int y) {
         posX = x;
         posY = y;
@@ -142,9 +138,7 @@ public class Comprador {
     }
 
     public void mostrarMoneda(Moneda moneda) { // Metodo puede ser agregado los metodos de moneda???
-
         String aux = "" + moneda.getClass();
-        System.out.println(aux);
         switch (aux) {
             case "class tarea3.Moneda100":
                 monedaVisualNueva = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda100.png")));
@@ -177,26 +171,8 @@ public class Comprador {
         }
     }
 
-    public Moneda getMoneda() { // Para ser usado
-        Moneda aux = moneda;
-        moneda = null;
-        return aux;
-    }
-
-    public void addMoneda(Moneda moneda) {
-        this.moneda = moneda;
-    }
-
-    public void setBebida(Bebida bebida) {
-        depositoBebidas.addBebida(bebida);
-    }
-
     public void setBebidaLabel(JLabel bebida) {
         depositoBebidas.addBebidaLabel(bebida);
-    }
-
-    public void setVuelto(Moneda moneda) {
-        depositoVuelto.add(moneda);
     }
 
     public void setVueltoLabel(JLabel moneda) {
@@ -217,10 +193,9 @@ public class Comprador {
         panelPrincipal.add(depositoMonedasLabel);
     }
 
+    // muestra todas las bebidas compradas
     public void mostrarBebidas() {
         JLabel auxLabel;
-        // muestra todas las bebidas compradas
-        System.out.println("COMPRADAS: " + depositoBebidas.getSize());
         for (int i = 0; i < depositoBebidas.getSize(); i++) { // relleno de maquina con bebidas
             auxLabel = depositoBebidas.seeBebidaLabel(i);
             auxLabel.setBounds(posXDepositoBebidas + 20, posYDepositoBebidas + 310 - 70 * i, 30, 60);  // serie mayor a menor
@@ -234,14 +209,12 @@ public class Comprador {
     public void mostrarVuelto() {
         JLabel auxLabel;
         int aux = 0;
-        // muestra todas las bebidas compradas
-        for (int i = 0; i < depositoVuelto.getSize(); i++) { // relleno de maquina con bebidas
+        for (int i = 0; i < depositoVuelto.getSize(); i++) {
             auxLabel = depositoVuelto.seeMonedaLabel(i);
-            System.out.println(depositoVuelto.getSize());
             if (i < 12) {
-                auxLabel.setBounds(posXDepositoMonedas + 10, posYDepositoMonedas + 350 - 30 * i, 20, 20);  // serie mayor a menor
+                auxLabel.setBounds(posXDepositoMonedas + 10, posYDepositoMonedas + 350 - 30 * i, 20, 20);
             } else {
-                auxLabel.setBounds(posXDepositoMonedas + 40, posYDepositoMonedas + 350 - 30 * aux, 20, 20);  // serie mayor a menor
+                auxLabel.setBounds(posXDepositoMonedas + 40, posYDepositoMonedas + 350 - 30 * aux, 20, 20);
                 aux++;
             }
             panelPrincipal.add(auxLabel);
@@ -249,18 +222,24 @@ public class Comprador {
             panelPrincipal.repaint();
         }
     }
-    //addBebida()
-    /* private Moneda moneda; //posible cambio como Moneda moneda en vez de comprador
 
-    public Comprador() {
-        this.moneda = null;
+    // BackEnd
+    public Moneda getMoneda() {
+        Moneda aux = moneda;
+        moneda = null;
+        return aux;
     }
 
-    public void setMoneda(Moneda moneda) {
+    public void addMoneda(Moneda moneda) {
         this.moneda = moneda;
     }
 
-    public Moneda getMoneda() {
-        return moneda;
-    } */
+    public void setBebida(Bebida bebida) {
+        depositoBebidas.addBebida(bebida);
+    }
+
+    public void setVuelto(Moneda moneda) {
+        depositoVuelto.add(moneda);
+    }
+
 }

@@ -16,36 +16,22 @@ public class DepositoBebida {
     private ArrayList<Bebida> deposito;
     private ArrayList<JLabel> depositoVisual;
 
+    // BackEnd
     public DepositoBebida() {
         deposito = new ArrayList<Bebida>();
         depositoVisual = new ArrayList<JLabel>();
     }
 
-    public void addBebida(Bebida bebida) { // agrega bebida al ArrayList<Bebida> deposito
+    public void addBebida(Bebida bebida) {
         deposito.add(bebida);
     }
 
-    public void addBebidaLabel(JLabel bebidaLabel) { // agrega bebida al ArrayList<Bebida> deposito
-        depositoVisual.add(bebidaLabel);
-    }
-
-    public Bebida getBebida() { // devuelve una bebida en caso de que hayan en el deposito, en caso contrario retorna `null`
+    public Bebida getBebida() {
         if (deposito.isEmpty()) {
             return null;
         } else {
             Bebida bebida = deposito.get(0);
             deposito.remove(0);
-            return bebida;
-        }
-    }
-
-    public JLabel getBebidaLabel() {
-        System.out.println("Cambio en BEBIDAS: " + depositoVisual.size());
-        if (depositoVisual.isEmpty()) {
-            return null;
-        } else {
-            JLabel bebida = depositoVisual.get(0);
-            depositoVisual.remove(0);
             return bebida;
         }
     }
@@ -59,6 +45,21 @@ public class DepositoBebida {
             return false;
         } else {
             return true;
+        }
+    }
+
+    // FrontEnd
+    public void addBebidaLabel(JLabel bebidaLabel) {
+        depositoVisual.add(bebidaLabel);
+    }
+
+    public JLabel getBebidaLabel() {
+        if (depositoVisual.isEmpty()) {
+            return null;
+        } else {
+            JLabel bebida = depositoVisual.get(0);
+            depositoVisual.remove(0);
+            return bebida;
         }
     }
 

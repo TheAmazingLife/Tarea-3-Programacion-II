@@ -8,6 +8,7 @@ package tarea3;
 // Metodos:
 // - add(Moneda vuelto) agrega moneda al ArrayList<Moneda> deposito
 // - getVuelto() devuelve una moneda en caso de que hayan en el deposito, en caso contrario retorna `null`
+
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -21,27 +22,9 @@ public class DepositoVuelto {
         depositoVisual = new ArrayList<JLabel>();
     }
 
+    // BackEnd
     public void add(Moneda vuelto) {
         deposito.add(vuelto);
-    }
-
-    public void addMonedaLabel(JLabel bebidaLabel) { // agrega bebida al ArrayList<Bebida> deposito
-        depositoVisual.add(bebidaLabel);
-    }
-
-    public JLabel getBebidaLabel() {
-        System.out.println("Cambio en BEBIDAS: " + depositoVisual.size());
-        if (depositoVisual.isEmpty()) {
-            return null;
-        } else {
-            JLabel bebida = depositoVisual.get(0);
-            depositoVisual.remove(0);
-            return bebida;
-        }
-    }
-
-    public JLabel seeMonedaLabel(int i) {
-        return depositoVisual.get(i);
     }
 
     public int getSize() {
@@ -55,6 +38,25 @@ public class DepositoVuelto {
             Moneda vuelto = deposito.get(0);
             deposito.remove(0);
             return vuelto;
+        }
+    }
+
+    // FrontEnd
+    public void addMonedaLabel(JLabel monedaLabel) { // agrega bebida al ArrayList<Bebida> deposito
+        depositoVisual.add(monedaLabel);
+    }
+
+    public JLabel seeMonedaLabel(int i) {
+        return depositoVisual.get(i);
+    }
+
+    public JLabel getMonedaLabel() {
+        if (depositoVisual.isEmpty()) {
+            return null;
+        } else {
+            JLabel moneda = depositoVisual.get(0);
+            depositoVisual.remove(0);
+            return moneda;
         }
     }
 }
