@@ -24,17 +24,16 @@ public class Comprador {
         moneda = null;
         depositoBebidas = new DepositoBebida();
         depositoVuelto = new DepositoVuelto();
-
         monedaVisual = null;
         monedaVisualNueva = null;
-
         compradorSetXY(640, 50);
         posXBilletera = 0;
         posYBilletera = 0;
         billeteraSetXY(posX, posY);
         this.panelPrincipal = panelPrincipal;
         visualizarComprador();
-        //colocarBebidasCompradas();
+        depositoBebidasCompradas();
+        depositoMonedasRetornadas();
         colocarBilletera();
     }
 
@@ -173,8 +172,41 @@ public class Comprador {
         depositoBebidas.addBebida(bebida);
     }
 
+    public void setBebidaLabel(JLabel bebida) {
+        depositoBebidas.addBebidaLabel(bebida);
+    }
+
     public void setVuelto(Moneda moneda) {
         depositoVuelto.add(moneda);
+    }
+
+    public void depositoBebidasCompradas() {
+        JLabel depositoBebidasLabel = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
+        depositoBebidasLabel.setBounds(posX + 345, posY + 20, 70, 400);
+        panelPrincipal.add(depositoBebidasLabel);
+    }
+
+    public void depositoMonedasRetornadas() {
+        JLabel depositoMonedasLabel = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
+        depositoMonedasLabel.setBounds(posX + 425, posY + 20, 70, 400);
+        panelPrincipal.add(depositoMonedasLabel);
+    }
+
+    public void mostrarBebidas() {
+        JLabel auxLabel;
+        // muestra todas las bebidas compradas
+        System.out.println("COMPRADAS: " + depositoBebidas.getSize());
+        for (int i = 0; i < depositoBebidas.getSize(); i++) { // relleno de maquina con bebidas
+            auxLabel = depositoBebidas.seeBebidaLabel(i);
+
+            //auxLabel.setBounds(cocacolaX + 20, cocacolaY + 30 + 70 * i, 30, 60); // serie menor  a mayor
+            auxLabel.setBounds(posX + 345 + 20, posY + 310 - 70 * i, 30, 60);  // serie mayor a menor
+
+            panelPrincipal.add(auxLabel);
+            panelPrincipal.setComponentZOrder(auxLabel, 0);
+            panelPrincipal.repaint();
+        }
+
     }
     //addBebida()
     /* private Moneda moneda; //posible cambio como Moneda moneda en vez de comprador

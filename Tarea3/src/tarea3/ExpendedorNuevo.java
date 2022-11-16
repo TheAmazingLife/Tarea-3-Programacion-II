@@ -21,11 +21,6 @@ public class ExpendedorNuevo {
         expendedorSetXY(145, 90);
         this.panelPrincipal = panelPrincipal;
         visualizarExpendedora();
-
-        llenarCocacola();
-        llenarSprite();
-        llenarFanta();
-        mostrarBebidas();
     }
 
     public void expendedorSetXY(int x, int y) {
@@ -36,6 +31,7 @@ public class ExpendedorNuevo {
     private void visualizarExpendedora() { // Agrega el panel expendedora
         colocarBotones();
         colocarEtiquetas();
+        mostrarBebidas();
     }
 
     private void llenarCocacola() {
@@ -196,6 +192,7 @@ public class ExpendedorNuevo {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                intentarRellenarDeposito(1);
                 mostrarBebidas();
                 panelPrincipal.repaint();
             }
@@ -228,6 +225,7 @@ public class ExpendedorNuevo {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                intentarRellenarDeposito(2);
                 mostrarBebidas();
                 panelPrincipal.repaint();
             }
@@ -260,6 +258,7 @@ public class ExpendedorNuevo {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                intentarRellenarDeposito(3);
                 mostrarBebidas();
                 panelPrincipal.repaint();
             }
@@ -312,6 +311,8 @@ public class ExpendedorNuevo {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 intentarSacarBebida();
+                comprador.mostrarBebidas();
+                panelPrincipal.repaint();
             }
         };
 
@@ -348,7 +349,6 @@ public class ExpendedorNuevo {
         JLabel expendedoraVisible = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/expendedor.jpg")));
         expendedoraVisible.setBounds(posX, posY, 350, 500);
         expendedoraVisible.setLayout(null);
-        expendedoraVisible.setBackground(Color.orange);
         panelPrincipal.add(expendedoraVisible);
 
     }
@@ -364,6 +364,7 @@ public class ExpendedorNuevo {
     private DepositoVuelto depositoMonedasCompras;
 
     private Bebida depositoEspecial;
+    private JLabel depositoEspecialLabel;
     private Moneda monedaIngresada;
     private Moneda depositoRetorno;
     private Comprador comprador;
@@ -378,6 +379,7 @@ public class ExpendedorNuevo {
         vueltoTotal = new DepositoVuelto();
         depositoMonedasCompras = new DepositoVuelto();
         depositoEspecial = null;
+        depositoEspecialLabel = null;
         monedaIngresada = null;
         depositoRetorno = null;
         // ! Temporal
@@ -418,9 +420,9 @@ public class ExpendedorNuevo {
                         bebida = cocacola.getBebida();
                         if (bebida != null) {
                             JLabel bebida1 = cocacola.getBebidaLabel();
-                            panelPrincipal.remove(bebida1);
-
                             pasarDeposito(bebida);
+                            pasarDepositoLabel(bebida1);
+                            panelPrincipal.remove(bebida1);
                             calcularVuelto(); // calcula vuelto en monedas de 100
                             depositoMonedasCompras.add(monedaIngresada); //deposita la moneda en las monedas usadas
                             monedaIngresada = null; // la monedaIngresada fue gastada 
@@ -437,9 +439,9 @@ public class ExpendedorNuevo {
 
                         if (bebida != null) {
                             JLabel bebida2 = sprite.getBebidaLabel();
-                            panelPrincipal.remove(bebida2);
-
                             pasarDeposito(bebida);
+                            pasarDepositoLabel(bebida2);
+                            panelPrincipal.remove(bebida2);
                             calcularVuelto();
                             depositoMonedasCompras.add(monedaIngresada);
                             monedaIngresada = null; // la monedaIngresada fue gastada
@@ -456,9 +458,10 @@ public class ExpendedorNuevo {
                         bebida = fanta.getBebida();
                         if (bebida != null) {
                             JLabel bebida3 = fanta.getBebidaLabel();
-                            panelPrincipal.remove(bebida3);
-                            
+
                             pasarDeposito(bebida);
+                            pasarDepositoLabel(bebida3);
+                            panelPrincipal.remove(bebida3);
                             calcularVuelto();
                             depositoMonedasCompras.add(monedaIngresada);
                             monedaIngresada = null; // la monedaIngresada fue gastada
@@ -477,6 +480,7 @@ public class ExpendedorNuevo {
         mostrarBebidas();
         panelPrincipal.repaint();
     }
+
     // TODO: arreglar sacar bebida, imprime error inmenso :c
     public void intentarSacarBebida() {
         try {
@@ -485,9 +489,9 @@ public class ExpendedorNuevo {
             // TODO: handle exception
             System.out.println(e.getMessage());
         }
-        
+
     }
-    
+
     public void getBebida() throws NoHayBebidaDeposito { // Llamado por el boton PULL saca la bebida del deposito
         if (depositoEspecial != null) {
             asignarBebida();
@@ -497,7 +501,7 @@ public class ExpendedorNuevo {
             throw new NoHayBebidaDeposito();
         }
     }
-    
+
     public void intentarRetornarMoneda() {
         try {
             Moneda aux = retornarMoneda(); //metodo retornar monedaIngresada deposito
@@ -508,7 +512,7 @@ public class ExpendedorNuevo {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public Moneda retornarMoneda() throws NoHayMonedaRetorno { // Metodo Retorno de moneda en depositoRetorno
         depositoRetorno = monedaIngresada;
 
@@ -521,7 +525,7 @@ public class ExpendedorNuevo {
             throw new NoHayMonedaRetorno();
         }
     }
-    
+
     private void intentarIngresarMoneda() {
         try {
             ingresarMoneda();
@@ -562,7 +566,7 @@ public class ExpendedorNuevo {
     public int getPrecioBebidas() { // retorna precioBebidas el precio de las bebidas
         return precioBebidas;
     }
-    
+
     public void setComprador(Comprador comprador) {
         this.comprador = comprador;
     }
@@ -571,10 +575,15 @@ public class ExpendedorNuevo {
         depositoEspecial = bebida;
     }
 
+    private void pasarDepositoLabel(JLabel bebida) {
+        depositoEspecialLabel = bebida;
+        comprador.setBebidaLabel(depositoEspecialLabel);
+    }
+
     private void asignarBebida() {
         comprador.setBebida(depositoEspecial);
     }
-    
+
     private void intentarRellenarDeposito(int cualDeposito) {
         try {
             rellenarDeposito(cualDeposito);
@@ -583,7 +592,7 @@ public class ExpendedorNuevo {
         }
     }
 
-    private void rellenarDeposito(int cualDeposito) throws NoSePuedeRellenarDeposito{
+    private void rellenarDeposito(int cualDeposito) throws NoSePuedeRellenarDeposito {
         switch (cualDeposito) {
             case 1:
                 if (cocacola.tieneBebidas() != true) {
@@ -591,6 +600,8 @@ public class ExpendedorNuevo {
                         Bebida cocacolaa = new CocaCola(100 + i);
                         this.cocacola.addBebida(cocacolaa);
                     }
+                    llenarCocacola();
+
                 } else {
                     throw new NoSePuedeRellenarDeposito();
                 }
@@ -601,6 +612,7 @@ public class ExpendedorNuevo {
                         Bebida spritee = new Sprite(200 + i);
                         this.sprite.addBebida(spritee);
                     }
+                    llenarSprite();
                 } else {
                     throw new NoSePuedeRellenarDeposito();
                 }
@@ -611,6 +623,7 @@ public class ExpendedorNuevo {
                         Bebida fantaa = new Fanta(300 + i);
                         this.fanta.addBebida(fantaa);
                     }
+                    llenarFanta();
                 } else {
                     throw new NoSePuedeRellenarDeposito();
                 }

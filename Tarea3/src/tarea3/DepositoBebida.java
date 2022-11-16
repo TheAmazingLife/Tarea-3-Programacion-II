@@ -61,6 +61,7 @@ public class DepositoBebida {
             return true;
         }
     }
+
     public JLabel seeBebidaLabel(int i) {
         return depositoVisual.get(i);
     }
