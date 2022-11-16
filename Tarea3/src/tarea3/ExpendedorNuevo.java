@@ -331,6 +331,8 @@ public class ExpendedorNuevo {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 intentarRetornarMoneda();
+                comprador.mostrarVuelto();
+                panelPrincipal.repaint();
             }
         };
 
@@ -505,12 +507,32 @@ public class ExpendedorNuevo {
     public void intentarRetornarMoneda() {
         try {
             Moneda aux = retornarMoneda(); //metodo retornar monedaIngresada deposito
+            JLabel monedaAux = retornarMonedaLabel(aux);
             System.out.println("Moneda retornada. " + aux);
             // TODO: pasarle la moneda aux al comprador y repintar la mano, cambiar el tipo de retorno
             comprador.setVuelto(aux);
+            comprador.setVueltoLabel(monedaAux);
         } catch (NoHayMonedaRetorno e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public JLabel retornarMonedaLabel(Moneda moneda) {
+        String aux = "" + moneda.getClass();
+        System.out.println(aux);
+        JLabel monedaVisual = null;
+        switch (aux) {
+            case "class tarea3.Moneda100":
+                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda100.png")));
+                break;
+            case "class tarea3.Moneda500":
+                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda500.png")));
+                break;
+            case "class tarea3.Moneda1000":
+                monedaVisual = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/moneda1000.png")));
+                break;
+        }
+        return monedaVisual;
     }
 
     public Moneda retornarMoneda() throws NoHayMonedaRetorno { // Metodo Retorno de moneda en depositoRetorno

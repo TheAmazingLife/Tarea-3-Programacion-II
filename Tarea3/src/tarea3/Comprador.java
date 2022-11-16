@@ -15,6 +15,8 @@ public class Comprador {
     private JLabel monedaVisualNueva;
     private int posX, posY;
     private int posXBilletera, posYBilletera;
+    private int posXDepositoBebidas, posYDepositoBebidas;
+    private int posXDepositoMonedas, posYDepositoMonedas;
 
     private DepositoBebida depositoBebidas;
     private DepositoVuelto depositoVuelto;
@@ -29,7 +31,14 @@ public class Comprador {
         compradorSetXY(640, 50);
         posXBilletera = 0;
         posYBilletera = 0;
+        posXDepositoBebidas = 0;
+        posYDepositoBebidas = 0;
+        posXDepositoMonedas = 0;
+        posYDepositoMonedas = 0;
         billeteraSetXY(posX, posY);
+        depositoBebidasSetXY(posX, posY);
+        depositoMonedasSetXY(posX, posY);
+
         this.panelPrincipal = panelPrincipal;
         visualizarComprador();
         depositoBebidasCompradas();
@@ -45,6 +54,16 @@ public class Comprador {
     public void billeteraSetXY(int x, int y) {
         posXBilletera += x;
         posYBilletera += y;
+    }
+
+    public void depositoBebidasSetXY(int x, int y) {
+        posXDepositoBebidas += x;
+        posYDepositoBebidas += y;
+    }
+
+    public void depositoMonedasSetXY(int x, int y) {
+        posXDepositoMonedas += x;
+        posYDepositoMonedas += y;
     }
 
     private void visualizarComprador() {
@@ -180,15 +199,21 @@ public class Comprador {
         depositoVuelto.add(moneda);
     }
 
+    public void setVueltoLabel(JLabel moneda) {
+        depositoVuelto.addMonedaLabel(moneda);
+    }
+
     public void depositoBebidasCompradas() {
         JLabel depositoBebidasLabel = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
-        depositoBebidasLabel.setBounds(posX + 345, posY + 20, 70, 400);
+        depositoBebidasSetXY(345, 20);
+        depositoBebidasLabel.setBounds(posXDepositoBebidas, posYDepositoBebidas, 70, 400);
         panelPrincipal.add(depositoBebidasLabel);
     }
 
     public void depositoMonedasRetornadas() {
         JLabel depositoMonedasLabel = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
-        depositoMonedasLabel.setBounds(posX + 425, posY + 20, 70, 400);
+        depositoMonedasSetXY(425, 20);
+        depositoMonedasLabel.setBounds(posXDepositoMonedas, posYDepositoMonedas, 70, 400);
         panelPrincipal.add(depositoMonedasLabel);
     }
 
@@ -198,15 +223,27 @@ public class Comprador {
         System.out.println("COMPRADAS: " + depositoBebidas.getSize());
         for (int i = 0; i < depositoBebidas.getSize(); i++) { // relleno de maquina con bebidas
             auxLabel = depositoBebidas.seeBebidaLabel(i);
-
-            //auxLabel.setBounds(cocacolaX + 20, cocacolaY + 30 + 70 * i, 30, 60); // serie menor  a mayor
-            auxLabel.setBounds(posX + 345 + 20, posY + 310 - 70 * i, 30, 60);  // serie mayor a menor
+            auxLabel.setBounds(posXDepositoBebidas + 20, posYDepositoBebidas + 310 - 70 * i, 30, 60);  // serie mayor a menor
 
             panelPrincipal.add(auxLabel);
             panelPrincipal.setComponentZOrder(auxLabel, 0);
             panelPrincipal.repaint();
         }
+    }
 
+    public void mostrarVuelto() {
+        JLabel auxLabel;
+        // muestra todas las bebidas compradas
+        for (int i = 0; i < depositoVuelto.getSize(); i++) { // relleno de maquina con bebidas
+            auxLabel = depositoVuelto.seeMonedaLabel(i);
+
+            //auxLabel.setBounds(cocacolaX + 20, cocacolaY + 30 + 70 * i, 30, 60); // serie menor  a mayor
+            auxLabel.setBounds(posXDepositoMonedas + 10, posYDepositoMonedas + 310 - 70 * i, 50, 50);  // serie mayor a menor
+
+            panelPrincipal.add(auxLabel);
+            panelPrincipal.setComponentZOrder(auxLabel, 0);
+            panelPrincipal.repaint();
+        }
     }
     //addBebida()
     /* private Moneda moneda; //posible cambio como Moneda moneda en vez de comprador
