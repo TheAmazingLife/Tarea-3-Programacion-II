@@ -498,16 +498,14 @@ public class ExpendedorNuevo {
         }
     }
     
-    public Moneda intentarRetornarMoneda() {
+    public void intentarRetornarMoneda() {
         try {
             Moneda aux = retornarMoneda(); //metodo retornar monedaIngresada deposito
             System.out.println("Moneda retornada. " + aux);
             // TODO: pasarle la moneda aux al comprador y repintar la mano, cambiar el tipo de retorno
-            return aux;
+            comprador.setVuelto(aux);
         } catch (NoHayMonedaRetorno e) {
-            // TODO: handle exception
             System.out.println(e.getMessage());
-            return null;
         }
     }
     
@@ -555,7 +553,6 @@ public class ExpendedorNuevo {
             Moneda monedaVuelto = new Moneda100();
             vueltoTotal.add(monedaVuelto);
         }
-        monedaIngresada = null; // se gasta la moneda
     }
 
     public Moneda getVuelto() { // devuelve UNA moneda del deposito en caso de que este vacio retorna null
