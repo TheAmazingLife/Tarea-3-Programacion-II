@@ -2,7 +2,6 @@ package tarea3;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -454,8 +453,6 @@ public class ExpendedorNuevo {
                 throw new DepositoEspecialLlenoException("Ya hay una bebida en el deposito."); // DepositoEspecialLlenoException
             } else {
                 if (monedaIngresada.getValor() >= precioBebidas) {
-                    // en caso de no haber bebidas o numero erroneo NoHayBebidaException y devuelve
-                    // la monedaIngresada al deposito
                     switch (cual) {
                         case 1:
                             bebida = cocacola.getBebida();
@@ -469,8 +466,6 @@ public class ExpendedorNuevo {
                                 depositoMonedasCompras.add(monedaIngresada); //deposita la moneda en las monedas usadas
                                 monedaIngresada = null; // la monedaIngresada fue gastada 
                             } else {
-                                // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
-                                // ! BORRADO vueltoTotal.add(monedaIngresada);
                                 throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                             }
                             break;
@@ -486,8 +481,6 @@ public class ExpendedorNuevo {
                                 depositoMonedasCompras.add(monedaIngresada);
                                 monedaIngresada = null; // la monedaIngresada fue gastada
                             } else {
-                                // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
-                                // ! BORRADO vueltoTotal.add(monedaIngresada);
                                 throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                             }
                             break;
@@ -503,8 +496,6 @@ public class ExpendedorNuevo {
                                 depositoMonedasCompras.add(monedaIngresada);
                                 monedaIngresada = null; // la moneda Ingresada fue gastada
                             } else {
-                                // ! ya no se devuelve al vuelto si no que se queda la monedaIngresada retenida
-                                // ! BORRADO vueltoTotal.add(monedaIngresada);
                                 throw new NoHayBebidaException("No hay bebida disponible."); // NoHayBebidaException
                             }
                     }
@@ -620,6 +611,7 @@ public class ExpendedorNuevo {
 
     private void mostrarVuelto() {
         JLabel auxLabel = null;
+        Boolean flag = true;
         int aux1 = 0;
         int aux2 = 0;
 
@@ -630,13 +622,18 @@ public class ExpendedorNuevo {
             } else if (i < 6) {
                 auxLabel.setBounds(posXdepositoVueltoLabel + 20, posYdepositoVueltoLabel + 20 * aux1, 20, 20);
                 aux1++;
-            } else {
+            } else if (i < 9) {
                 auxLabel.setBounds(posXdepositoVueltoLabel + 40, posYdepositoVueltoLabel + 20 * aux2, 20, 20);
                 aux2++;
+            } else {
+                flag = false;
             }
-            panelPrincipal.add(auxLabel);
-            panelPrincipal.setComponentZOrder(auxLabel, 0);
-            panelPrincipal.repaint();
+            if (flag) {
+                panelPrincipal.add(auxLabel);
+                panelPrincipal.setComponentZOrder(auxLabel, 0);
+                panelPrincipal.repaint();
+            }
+
         }
     }
 
@@ -664,7 +661,7 @@ public class ExpendedorNuevo {
         }
     }
 
-    public int getPrecioBebidas() { // retorna precioBebidas el precio de las bebidas
+    public int getPrecioBebidas() {
         return precioBebidas;
     }
 
@@ -720,7 +717,7 @@ public class ExpendedorNuevo {
                 break;
             case 3:
                 if (fanta.tieneBebidas() != true) {
-                    for (int i = 0; i < numBebidas; i++) { // relleno de maquina con bebidas
+                    for (int i = 0; i < numBebidas; i++) {
                         Bebida fantaa = new Fanta(300 + i);
                         this.fanta.addBebida(fantaa);
                     }
