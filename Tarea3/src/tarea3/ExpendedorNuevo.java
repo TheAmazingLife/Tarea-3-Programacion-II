@@ -407,8 +407,11 @@ public class ExpendedorNuevo {
 
     // BackEnd
     private DepositoBebida cocacola;
+    private int contCocaCola;
     private DepositoBebida sprite;
+    private int contSprite;
     private DepositoBebida fanta;
+    private int contFanta;
 
     private int precioBebidas;
 
@@ -423,9 +426,9 @@ public class ExpendedorNuevo {
     private int numBebidas;
 
     public ExpendedorNuevo() {
-        cocacola = new DepositoBebida();
-        sprite = new DepositoBebida();
-        fanta = new DepositoBebida();
+        cocacola = new DepositoBebida(); contCocaCola = 0;
+        sprite = new DepositoBebida(); contSprite = 0;
+        fanta = new DepositoBebida(); contFanta = 0;
         // this.precioBebidas = precioBebidas; // Seleccionar el precio de las bebidas
         vueltoTotal = new DepositoVuelto();
         depositoMonedasCompras = new DepositoVuelto();
@@ -519,13 +522,11 @@ public class ExpendedorNuevo {
         mostrarBebidas();
         panelPrincipal.repaint();
     }
-    // TODO: arreglar sacar bebida, imprime error inmenso :c
 
     public void intentarSacarBebida() {
         try {
             getBebida();
         } catch (NoHayBebidaDeposito e) {
-            // TODO: handle exception
             System.out.println(e.getMessage());
         }
 
@@ -707,8 +708,9 @@ public class ExpendedorNuevo {
             case 1:
                 if (cocacola.tieneBebidas() != true) {
                     for (int i = 0; i < numBebidas; i++) {
-                        Bebida cocacolaa = new CocaCola(100 + i);
+                        Bebida cocacolaa = new CocaCola(100 + contCocaCola);
                         this.cocacola.addBebida(cocacolaa);
+                        contCocaCola++;
                     }
                     llenarCocacola();
 
@@ -719,8 +721,9 @@ public class ExpendedorNuevo {
             case 2:
                 if (sprite.tieneBebidas() != true) {
                     for (int i = 0; i < numBebidas; i++) {
-                        Bebida spritee = new Sprite(200 + i);
+                        Bebida spritee = new Sprite(200 + contSprite);
                         this.sprite.addBebida(spritee);
+                        contSprite++;
                     }
                     llenarSprite();
                 } else {
@@ -730,8 +733,9 @@ public class ExpendedorNuevo {
             case 3:
                 if (fanta.tieneBebidas() != true) {
                     for (int i = 0; i < numBebidas; i++) {
-                        Bebida fantaa = new Fanta(300 + i);
+                        Bebida fantaa = new Fanta(300 + contFanta);
                         this.fanta.addBebida(fantaa);
+                        contFanta++;
                     }
                     llenarFanta();
                 } else {
