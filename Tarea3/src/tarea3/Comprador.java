@@ -69,12 +69,6 @@ public class Comprador {
         panelPrincipal.add(compradorVisible);
     }
 
-    private void colocarBebidasCompradas() {
-        JLabel bebidasCompradas = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/depositoBebida.png")));
-        bebidasCompradas.setBounds(425, 125, 70, 400);
-        panelPrincipal.add(bebidasCompradas);
-    }
-
     private void colocarBilletera() {
         JLabel menuMonedas = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/billetera.png")));
         menuMonedas.setLayout(null);
@@ -88,21 +82,21 @@ public class Comprador {
 
         // moneda100
         JButton moneda100 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/moneda100.png"))); // tamaño de imagen ya coincide con tamaño del boton
-        moneda100.setBounds(posXBilletera + 28, posYBilletera + 80, 50, 50);
+        moneda100.setBounds(posXBilletera + 72, posYBilletera + 85, 35, 35);
         moneda100.setEnabled(true);
         moneda100.setMnemonic('1');
         panelPrincipal.add(moneda100);
 
         // moneda500
         JButton moneda500 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/moneda500.png"))); // tamaño de imagen ya coincide con tamaño del boton
-        moneda500.setBounds(posXBilletera + 83, posYBilletera + 80, 50, 50);
+        moneda500.setBounds(posXBilletera + 112, posYBilletera + 85, 35, 35);
         moneda500.setEnabled(true);
         moneda500.setMnemonic('2');
         panelPrincipal.add(moneda500);
 
         // moneda1000
         JButton moneda1000 = new JButton(new ImageIcon(this.getClass().getResource("/recursos/moneda1000.png"))); // tamaño de imagen ya coincide con tamaño del boton
-        moneda1000.setBounds(posXBilletera + 138, posYBilletera + 80, 50, 50);
+        moneda1000.setBounds(posXBilletera + 152, posYBilletera + 85, 35, 35);
         moneda1000.setEnabled(true);
         moneda1000.setMnemonic('1');
         panelPrincipal.add(moneda1000);
@@ -197,29 +191,35 @@ public class Comprador {
     public void mostrarBebidas() {
         JLabel auxLabel;
         for (int i = 0; i < depositoBebidas.getSize(); i++) { // relleno de maquina con bebidas
-            auxLabel = depositoBebidas.seeBebidaLabel(i);
-            auxLabel.setBounds(posXDepositoBebidas + 20, posYDepositoBebidas + 310 - 70 * i, 30, 60);  // serie mayor a menor
-
-            panelPrincipal.add(auxLabel);
-            panelPrincipal.setComponentZOrder(auxLabel, 0);
-            panelPrincipal.repaint();
+            if (i < 5) {
+                auxLabel = depositoBebidas.seeBebidaLabel(i);
+                auxLabel.setBounds(posXDepositoBebidas + 20, posYDepositoBebidas + 310 - 70 * i, 30, 60);  // serie mayor a menor
+                panelPrincipal.add(auxLabel);
+                panelPrincipal.setComponentZOrder(auxLabel, 0);
+                panelPrincipal.repaint();
+            }
         }
     }
 
     public void mostrarVuelto() {
         JLabel auxLabel;
+        Boolean flag = true;
         int aux = 0;
         for (int i = 0; i < depositoVuelto.getSize(); i++) {
             auxLabel = depositoVuelto.seeMonedaLabel(i);
             if (i < 12) {
                 auxLabel.setBounds(posXDepositoMonedas + 10, posYDepositoMonedas + 350 - 30 * i, 20, 20);
-            } else {
+            } else if (i < 24) {
                 auxLabel.setBounds(posXDepositoMonedas + 40, posYDepositoMonedas + 350 - 30 * aux, 20, 20);
                 aux++;
+            } else {
+                flag = false;
             }
-            panelPrincipal.add(auxLabel);
-            panelPrincipal.setComponentZOrder(auxLabel, 0);
-            panelPrincipal.repaint();
+            if (flag) {
+                panelPrincipal.add(auxLabel);
+                panelPrincipal.setComponentZOrder(auxLabel, 0);
+                panelPrincipal.repaint();
+            }
         }
     }
 

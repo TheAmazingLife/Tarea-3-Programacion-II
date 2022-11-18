@@ -70,5 +70,4 @@ public class DepositoBebida {
     public int getSerieOf(int i) {
         return deposito.get(i).getSerie();
     }
-
 }
