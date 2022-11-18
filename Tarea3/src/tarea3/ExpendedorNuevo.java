@@ -37,6 +37,7 @@ public class ExpendedorNuevo {
     }
 
     private void visualizarExpendedora() { // Agrega el panel expendedora
+
         mostrarDepositoVuelto();
         colocarBotones();
         colocarEtiquetas();
@@ -390,7 +391,18 @@ public class ExpendedorNuevo {
         JLabel expendedoraVisible = new JLabel(new ImageIcon(this.getClass().getResource("/recursos/expendedor.jpg")));
         expendedoraVisible.setBounds(posX, posY, 350, 500);
         expendedoraVisible.setLayout(null);
+
+        JLabel precioBebidasLabel = new JLabel("$" + String.valueOf(precioBebidas), SwingConstants.CENTER);
+        precioBebidasLabel.setBounds(posX + 270, posY + 100, 60, 30);
+        precioBebidasLabel.setOpaque(true);
+        precioBebidasLabel.setForeground(Color.red);
+        precioBebidasLabel.setBackground(Color.black);
+        precioBebidasLabel.setFont(new Font("arial", 1, 20));
+
+        panelPrincipal.setComponentZOrder(precioBebidasLabel, 0);
+        panelPrincipal.add(precioBebidasLabel);
         panelPrincipal.add(expendedoraVisible);
+
     }
 
     // BackEnd
